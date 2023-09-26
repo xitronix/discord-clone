@@ -1,3 +1,4 @@
+import { AuthContextProvider } from "@/context/Auth";
 import "./globals.css";
 import type { Metadata } from "next";
 import { Noto_Sans } from "next/font/google";
@@ -19,7 +20,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={notoSans.className}>{children}</body>
+      <body className={notoSans.className}>
+        <AuthContextProvider>{children}</AuthContextProvider>
+      </body>
     </html>
   );
 }

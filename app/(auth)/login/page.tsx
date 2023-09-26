@@ -7,18 +7,16 @@ import {
   signInWithEmailAndPassword,
   signInWithPopup,
 } from "firebase/auth";
-import { useRouter } from "next/navigation";
+import Link from "next/link";
 import { useState } from "react";
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const router = useRouter();
 
   const signInWithGoogle = async () => {
     const provider = new GoogleAuthProvider();
     await signInWithPopup(auth, provider);
-    router.push("/");
   };
 
   return (
@@ -29,17 +27,19 @@ const LoginPage = () => {
       </div>
       <div className="flex flex-col gap-2">
         <p>Password:</p>
-        <input value={password} onChange={(e) => setPassword(e.target.value)} />
+        <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
       </div>
       <Button
         onClick={async () => {
           await signInWithEmailAndPassword(auth, email, password);
-          router.push("/");
         }}
       >
         Log In
       </Button>
       <Button onClick={signInWithGoogle}>Connect with Google</Button>
+      <Button asChild variant="link">
+        <Link href="/register">Doesn' t have account yet?</Link>
+      </Button>
     </div>
   );
 };

@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { auth } from "@/app/firebase";
 import { onAuthStateChanged } from "firebase/auth";
@@ -15,7 +15,9 @@ export const AuthContextProvider = ({
 }) => {
   const router = useRouter();
   const [user, setUser] = useState<User>();
-  const pathname = usePathname()
+  const pathname = usePathname();
+
+  const isAuthPath = ["/login", "/register"].includes(pathname);
 
   useEffect(() => {
     return onAuthStateChanged(auth, (user) => {
@@ -26,10 +28,16 @@ export const AuthContextProvider = ({
         setUser(user);
         console.log("uid", uid);
       } else {
-        router.push("/login");
+        setUser(undefined);
       }
     });
   }, [user]);
+
+  if (user && isAuthPath) {
+    router.push("/");
+  } else if (!user && !isAuthPath) {
+    router.push("/login");
+  }
   return <AuthContext.Provider value={user}>{children}</AuthContext.Provider>;
 };
 

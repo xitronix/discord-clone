@@ -24,7 +24,6 @@ const RegisterPage = () => {
       createUserWithEmailAndPassword(auth, email as string, password as string)
         .then((authUser) => {
           console.log("Success. The user is created in Firebase");
-          router.push("/");
         })
         .catch((error) => {
           // An error occurred. Set error message to be displayed to user
@@ -39,7 +38,9 @@ const RegisterPage = () => {
       <div className="text-gray-100 text-xl text-center">Create an account</div>
       <form ref={formRef} onSubmit={onSubmit} className="grid gap-4">
         <div className="flex flex-col">
-          <label className="text-gray-300" htmlFor="register-email">Email</label>
+          <label className="text-gray-300" htmlFor="register-email">
+            Email
+          </label>
           <input
             id="register-email"
             type="email"
