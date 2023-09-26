@@ -2,6 +2,8 @@ import { AuthContextProvider } from "@/context/Auth";
 import "./globals.css";
 import type { Metadata } from "next";
 import { Noto_Sans } from "next/font/google";
+import { ThemeProvider } from "@/context/Theme";
+import { NavBar } from "@/components/ui/NavBar";
 
 const notoSans = Noto_Sans({
   subsets: ["latin"],
@@ -19,9 +21,19 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body className={notoSans.className}>
-        <AuthContextProvider>{children}</AuthContextProvider>
+        <ThemeProvider
+          themes={["dark", "light", "system"]}
+          attribute="class"
+          defaultTheme="dark"
+          storageKey="discord-clone-theme"
+        >
+          <AuthContextProvider>
+            <NavBar />
+            {children}
+          </AuthContextProvider>
+        </ThemeProvider>
       </body>
     </html>
   );
