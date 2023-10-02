@@ -4,13 +4,11 @@ import { auth } from "@/app/firebase";
 import { Button } from "@/components/ui/button";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { FormEvent, useRef, useState } from "react";
 
 const RegisterPage = () => {
   const formRef = useRef<HTMLFormElement>(null);
   const [error, setError] = useState<string>();
-  const router = useRouter();
 
   const onSubmit = (event: FormEvent<HTMLFormElement>) => {
     setError(undefined);
