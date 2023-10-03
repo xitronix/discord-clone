@@ -1,6 +1,6 @@
 "use client";
 
-import { auth } from "@/app/firebase";
+import { auth } from "@/firebase/firebaseClient";
 import { useAuth } from "@/context/Auth";
 import { Button } from "./button";
 

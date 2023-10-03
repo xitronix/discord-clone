@@ -1,6 +1,6 @@
 "use client";
 
-import { auth } from "@/app/firebase";
+import { auth } from "@/firebase/firebaseClient";
 import { Button } from "@/components/ui/button";
 import {
   GoogleAuthProvider,

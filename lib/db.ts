@@ -1,6 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 import { User } from "firebase/auth";
-import { firebaseAdmin } from "@/app/firebase/firebaseAdmin";
+import { firebaseAdmin } from "@/firebase/firebaseAdmin";
 import { cookies } from "next/headers";
 
 declare global {
