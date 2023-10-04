@@ -2,7 +2,7 @@
 
 import { auth } from "@/firebase/firebaseClient";
 import { useAuth } from "@/context/Auth";
-import { Button } from "./button";
+import { Button } from "./ui/button";
 
 export const UserButton = () => {
   const { user } = useAuth();

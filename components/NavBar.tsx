@@ -1,4 +1,4 @@
-import { ThemeTogle } from "./ThemeTogle";
+import { ThemeTogle } from "./ui/ThemeTogle";
 import { UserButton } from "./UserButton";
 
 export const NavBar = () => {
