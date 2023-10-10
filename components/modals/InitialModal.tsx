@@ -22,6 +22,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useEffect, useState } from "react";
+import { UploadFile } from "../UploadFile";
 
 const formSchema = zod.object({
   name: zod.string().min(1, "Server name is required"),
@@ -64,9 +65,19 @@ export const InitialModal = () => {
         </DialogHeader>
         <Form {...form}>
           <form className="" onSubmit={form.handleSubmit(onSubmit)}>
-            <div className="flex items-center justrify-center text-center pb-6">
-              TODO: Imgage Upload
-            </div>
+            <FormField
+              control={form.control}
+              name="imageUrl"
+              render={({ field }) => (
+                <FormItem className="flex flex-col w-full justify-center items-center">
+                  <FormControl>
+                    <UploadFile onChange={field.onChange} value={field.value} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            ></FormField>
+
             <FormField
               control={form.control}
               name="name"

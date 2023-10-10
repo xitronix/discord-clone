@@ -48,12 +48,6 @@ export const AuthContextProvider = ({
     return () => clearInterval(handle);
   }, []);
 
-  // const isUser = nookies.get(undefined, 'jwt')
-  // if (isAuthPath && user) {
-  //   router.push("/");
-  // } else if (!isAuthPath && !user)
-  // console.log({ user, isAuthPath });
-
   return (
     <AuthContext.Provider value={{ user }}>{children}</AuthContext.Provider>
   );

@@ -88,3 +88,8 @@ model Channel {
   @@index([profileId])
   @@index([serverId])
 }
+
+model ServerImage {
+  id    String @id @default(uuid())
+  image Bytes  @db.ByteA
+}
