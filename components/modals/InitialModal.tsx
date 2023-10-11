@@ -55,7 +55,7 @@ export const InitialModal = () => {
     <Dialog open={isOpen} onOpenChange={(isOpen) => setIsOpen(isOpen)}>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle className="text-center text-bold">
+          <DialogTitle className="text-center text-bold text-2xl">
             Create server
           </DialogTitle>
           <DialogDescription className="text-center">
@@ -64,12 +64,12 @@ export const InitialModal = () => {
           </DialogDescription>
         </DialogHeader>
         <Form {...form}>
-          <form className="" onSubmit={form.handleSubmit(onSubmit)}>
+          <form onSubmit={form.handleSubmit(onSubmit)}>
             <FormField
               control={form.control}
               name="imageUrl"
               render={({ field }) => (
-                <FormItem className="flex flex-col w-full justify-center items-center">
+                <FormItem className="flex flex-col w-full justify-center items-center pb-4">
                   <FormControl>
                     <UploadFile onChange={field.onChange} value={field.value} />
                   </FormControl>
