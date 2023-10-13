@@ -1,6 +1,7 @@
 import { currentProfile } from "@/lib/currentProfile";
 import { db } from "@/lib/db";
 import NavigationAction from "./NavigationAction";
+import { Separator } from "@/components/ui/separator";
 
 export const NavSidebar = async () => {
   const profile = await currentProfile();
@@ -17,6 +18,7 @@ export const NavSidebar = async () => {
   return (
     <div className="space-y-4 flex flex-col items-center h-full bg-secondary w-full py-3">
       <NavigationAction />
+      <Separator className="h-[2px] w-1/2" />
     </div>
   );
 };
