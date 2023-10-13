@@ -8,6 +8,8 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ success: false }, { status: 400 });
   }
 
+  console.log(file);
+
   const bytes = await file.arrayBuffer();
   const buffer = Buffer.from(bytes);
 
@@ -19,3 +21,12 @@ export async function POST(request: NextRequest) {
   const imageUrl = `${request.url}/${id}`;
   return NextResponse.json({ success: true, imageUrl });
 }
+
+export const config = {
+  api: {
+    bodyParser: {
+      sizeLimit: "1mb",
+    },
+  },
+  maxDuration: 5,
+};

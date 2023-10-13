@@ -3,6 +3,7 @@ import "./globals.css";
 import type { Metadata } from "next";
 import { Noto_Sans } from "next/font/google";
 import { ThemeProvider } from "@/context/Theme";
+import { ModalProvider } from "@/context/ModalProvider";
 
 const notoSans = Noto_Sans({
   subsets: ["latin"],
@@ -29,6 +30,7 @@ export default function RootLayout({
           storageKey="discord-clone-theme"
         >
           <AuthContextProvider>
+            <ModalProvider />
             {children}
           </AuthContextProvider>
         </ThemeProvider>

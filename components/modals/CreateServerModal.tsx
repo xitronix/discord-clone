@@ -21,20 +21,20 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { useEffect, useState } from "react";
 import { UploadFile } from "../UploadFile";
 import { useRouter } from "next/navigation";
+import { useModal } from "@/hooks/useModalStore";
 
 const formSchema = zod.object({
   name: zod.string().min(1, "Server name is required"),
   imageUrl: zod.string().min(1, "Server image is required"),
 });
 
-export const InitialModal = () => {
-  const [isMounted, setIsMounted] = useState(false);
+export const CreateServerModal = () => {
+  const { isOpen, onClose, type } = useModal();
   const router = useRouter();
+  const isModalOpen = isOpen && type === "createServer";
 
-  useEffect(() => setIsMounted(true), []);
   const form = useForm({
     resolver: zodResolver(formSchema, { async: true }),
     defaultValues: {
@@ -52,17 +52,19 @@ export const InitialModal = () => {
       });
       form.reset();
       router.refresh();
+      onClose();
     } catch (e) {
       console.error(e);
     }
   };
 
-  if (!isMounted) {
-    return null;
-  }
+  const handleClose = () => {
+    form.reset();
+    onClose();
+  };
 
   return (
-    <Dialog open>
+    <Dialog open={isModalOpen} onOpenChange={handleClose}>
       <DialogContent>
         <DialogHeader>
           <DialogTitle className="text-center text-bold text-2xl">

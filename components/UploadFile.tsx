@@ -18,9 +18,11 @@ export const UploadFile = ({
     if (!file) return;
     const data = new FormData();
     data.set("file", file);
+    console.log("file", file, data.get("file"));
     const response = await fetch(endpoint, {
       body: data,
       method: "POST",
+      cache: "no-store",
     });
     if (!response.ok) throw new Error(await response.text());
     onChange((await response.json()).imageUrl);
@@ -47,6 +49,8 @@ export const UploadFile = ({
         onDrop={(event) => {
           event.preventDefault();
           const file = event.dataTransfer.files?.[0];
+          console.log(event.dataTransfer.files.length);
+          return;
           if (!file) return;
           uploadFile(file);
         }}
@@ -94,13 +98,4 @@ export const UploadFile = ({
       </label>
     </div>
   );
-};
-
-export const config = {
-  api: {
-    bodyParser: {
-      sizeLimit: "1mb",
-    },
-  },
-  maxDuration: 5,
 };
