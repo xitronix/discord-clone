@@ -23,6 +23,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useEffect, useState } from "react";
 import { UploadFile } from "../UploadFile";
+import { useRouter } from "next/navigation";
 
 const formSchema = zod.object({
   name: zod.string().min(1, "Server name is required"),
@@ -32,6 +33,7 @@ const formSchema = zod.object({
 export const InitialModal = () => {
   const [isMounted, setIsMounted] = useState(false);
   const [isOpen, setIsOpen] = useState(true);
+  const router = useRouter();
 
   useEffect(() => setIsMounted(true), []);
   const form = useForm({
@@ -44,7 +46,16 @@ export const InitialModal = () => {
   const isLoading = form.formState.isSubmitting;
 
   const onSubmit = async (values: zod.infer<typeof formSchema>) => {
-    console.log(values);
+    try {
+      await fetch("/api/servers", {
+        body: JSON.stringify(values),
+        method: "POST",
+      });
+      form.reset();
+      router.refresh();
+    } catch (e) {
+      console.error(e);
+    }
   };
 
   if (!isMounted) {

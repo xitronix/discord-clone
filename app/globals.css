@@ -49,7 +49,7 @@ body,
     --card-foreground: 232, 86%, 65%;
  
     --popover: 223, 5%, 17%;
-    --popover-foreground: 232, 86%, 65%;
+    --popover-foreground: 0, 0, 100%;
     
     --primary: 232, 86%, 65%;
     --primary-foreground: 60 9.1% 97.8%;
