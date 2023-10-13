@@ -2,8 +2,6 @@
 
 import { X } from "lucide-react";
 import Image from "next/image";
-import { Button } from "./ui/button";
-import { useEffect, useState } from "react";
 
 interface UploadFileProps {
   onChange: (url?: string) => void;
