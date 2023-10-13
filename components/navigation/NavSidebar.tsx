@@ -3,7 +3,9 @@ import { db } from "@/lib/db";
 import NavigationAction from "./NavigationAction";
 import { Separator } from "@/components/ui/separator";
 import { ScrollArea } from "@/components/ui/ScrollArea";
+import { ThemeTogle } from "@/components/ui/ThemeTogle";
 import { NavigationItem } from "./NavigationItem";
+import { UserButton } from "@/components/UserButton";
 
 export const NavSidebar = async () => {
   const profile = await currentProfile();
@@ -26,6 +28,10 @@ export const NavSidebar = async () => {
           <NavigationItem key={id} id={id} name={name} imageUrl={imageUrl} />
         ))}
       </ScrollArea>
+      <div className="pb-2 flex flex-col gap-y-4 items-center">
+        <ThemeTogle />
+        <UserButton />
+      </div>
     </div>
   );
 };

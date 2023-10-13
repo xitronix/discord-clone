@@ -8,7 +8,14 @@ export const UserButton = () => {
   const { user } = useAuth();
 
   if (user) {
-    return <Button onClick={() => auth.signOut()}>Log Out</Button>;
+    return (
+      <Button
+        className="rounded-full w-12 h-12 overflow-hidden flex items-center justify-center"
+        onClick={() => auth.signOut()}
+      >
+        Log Out
+      </Button>
+    );
   } else {
     return null;
   }
