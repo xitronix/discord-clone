@@ -3,7 +3,7 @@ import "./globals.css";
 import type { Metadata } from "next";
 import { Noto_Sans } from "next/font/google";
 import { ThemeProvider } from "@/context/Theme";
-import { NavBar } from "@/components/NavBar";
+import { NavBar } from "@/components/navigation/NavBar";
 
 const notoSans = Noto_Sans({
   subsets: ["latin"],

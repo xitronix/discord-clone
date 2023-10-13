@@ -1,7 +1,7 @@
 "use client";
 
 import { Plus } from "lucide-react";
-import ActionTooltip from "./ActionTooltip";
+import ActionTooltip from "@/components/ActionTooltip";
 
 const NavigationAction = () => {
   return (
