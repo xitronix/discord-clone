@@ -18,7 +18,6 @@ export const UploadFile = ({
     if (!file) return;
     const data = new FormData();
     data.set("file", file);
-    console.log("file", file, data.get("file"));
     const response = await fetch(endpoint, {
       body: data,
       method: "POST",
@@ -49,8 +48,6 @@ export const UploadFile = ({
         onDrop={(event) => {
           event.preventDefault();
           const file = event.dataTransfer.files?.[0];
-          console.log(event.dataTransfer.files.length);
-          return;
           if (!file) return;
           uploadFile(file);
         }}
