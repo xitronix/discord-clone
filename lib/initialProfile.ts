@@ -20,7 +20,7 @@ export const initialProfile = async () => {
     data: {
       userId,
       name: `${name}`,
-      imageUrl: picture,
+      imageUrl: picture || "",
       email,
     },
   });
