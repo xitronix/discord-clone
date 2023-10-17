@@ -1,9 +1,9 @@
 "use client";
 
+import { setJwt } from "@/actions/cookies";
 import { auth } from "@/firebase/firebaseClient";
 import { User, onAuthStateChanged } from "firebase/auth";
 import { usePathname, useRouter } from "next/navigation";
-import nookies from "nookies";
 import React, { createContext, useContext, useEffect, useState } from "react";
 
 const AuthContext = createContext<{ user: User | null }>({ user: null });
@@ -22,15 +22,15 @@ export const AuthContextProvider = ({
   useEffect(() => {
     return onAuthStateChanged(auth, async (user) => {
       if (!user) {
+        await setJwt("");
         setUser(null);
-        nookies.set(undefined, "jwt", "");
         if (!isAuthPath) {
           router.push("/login");
         }
       } else {
         const jwt = await user.getIdToken();
+        await setJwt(jwt);
         setUser(user);
-        nookies.set(undefined, "jwt", jwt);
         if (isAuthPath) {
           router.push("/");
         }

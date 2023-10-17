@@ -9,9 +9,6 @@ export const InvitePage = async ({
 }) => {
   const profile = await currentProfile();
 
-  if (!profile) {
-    return redirect("/login");
-  }
   const memberedServer = await db.server.findFirst({
     where: {
       inviteCode,
