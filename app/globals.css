@@ -20,16 +20,16 @@ body,
     --popover-foreground: 223, 5%, 23%;
  
     --primary: 232, 86%, 65%;
-    --primary-foreground: 60 9.1% 97.8%;
+    --primary-foreground: 60 9.1% 88.8%;
  
     --secondary: 60 4.8% 95.9%;
-    --secondary-foreground: 60 9.1% 97.8%;
+    --secondary-foreground: 60 9.1% 88.8%;
  
     --muted: 60 4.8% 95.9%;
     --muted-foreground: 25 5.3% 44.7%;
  
     --accent: 60 4.8% 95.9%;
-    --accent-foreground: 60 9.1% 97.8%;
+    --accent-foreground: 60 9.1% 88.8%;
  
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 232, 86%, 65%;
@@ -52,7 +52,7 @@ body,
     --popover-foreground: 0, 0, 100%;
     
     --primary: 232, 86%, 65%;
-    --primary-foreground: 60 9.1% 97.8%;
+    --primary-foreground: 60 9.1% 88.8%;
 
     --secondary: 12 6.5% 15.1%;
     --secondary-foreground: 232, 86%, 65%;
