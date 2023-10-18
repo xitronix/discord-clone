@@ -6,9 +6,10 @@ import { useModal } from "@/hooks/useModalStore";
 import { Label } from "../ui/label";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
-import { Check, Copy, RefreshCcw } from "lucide-react";
+import { RefreshCcw } from "lucide-react";
 import { useOrigin } from "@/hooks/useOrigin";
 import { useState } from "react";
+import { cn } from "@/lib";
 
 export const InviteModal = () => {
   const {
@@ -59,16 +60,16 @@ export const InviteModal = () => {
         </DialogHeader>
         <div className="flex flex-col gap-y-2">
           <Label className="uppercase text-xs font-bold">Invite Link</Label>
-          <div className="flex flex-row gap-4">
+          <div className="flex flex-row gap-4 items-center">
             <Input readOnly value={inviteLink} disabled={isLoading} />
             <Button
-              onClick={onCopy}
-              disabled={isLoading}
-              variant="link"
-              size="icon"
-            >
-              {isCopied ? <Check /> : <Copy />}
-            </Button>
+                onClick={onCopy}
+                disabled={isLoading}
+                className={cn('w-20 px-2 h-4/5', isCopied && "bg-green-700/100 hover:bg-green-700/70 text-primary-foreground")}
+                size="icon"
+              >
+                {isCopied ? "Copied" : "Copy"}
+              </Button>
           </div>
           <Button
             disabled={isLoading}
