@@ -19,7 +19,7 @@ import {
 } from "lucide-react";
 import { useModal } from "@/hooks/useModalStore";
 
-export type MembersWithProfile = Member & { profile: Profile }
+export type MembersWithProfile = Member & { profile: Profile };
 
 export type ServerWithMembersWithProfile = Server & {
   members: MembersWithProfile[];
@@ -74,7 +74,10 @@ export const ServerHeader = ({ server, role }: ServerHeaderProps) => {
           </DropdownMenuItem>
         )}
         {isModerator && (
-          <DropdownMenuItem className="cursor-pointer">
+          <DropdownMenuItem
+            onClick={() => onOpen("createChannel", { server })}
+            className="cursor-pointer"
+          >
             Create Channel <PlusCircle className="h-4 w-4 ml-auto" />
           </DropdownMenuItem>
         )}
