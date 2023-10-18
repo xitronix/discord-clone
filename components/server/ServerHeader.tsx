@@ -19,8 +19,10 @@ import {
 } from "lucide-react";
 import { useModal } from "@/hooks/useModalStore";
 
+export type MembersWithProfile = Member & { profile: Profile }
+
 export type ServerWithMembersWithProfile = Server & {
-  members: (Member & { profile: Profile })[];
+  members: MembersWithProfile[];
 };
 
 interface ServerHeaderProps {
@@ -64,7 +66,10 @@ export const ServerHeader = ({ server, role }: ServerHeaderProps) => {
           </DropdownMenuItem>
         )}
         {isAdmin && (
-          <DropdownMenuItem className="cursor-pointer">
+          <DropdownMenuItem
+            onClick={() => onOpen("members", { server })}
+            className="cursor-pointer"
+          >
             Manage Members <Users className="h-4 w-4 ml-auto" />
           </DropdownMenuItem>
         )}
