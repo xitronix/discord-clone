@@ -1,5 +1,6 @@
 "use client";
 const ServerIdPage = () => {
+  
   return <div>Server Page</div>;
 };
 
