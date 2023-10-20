@@ -83,12 +83,15 @@ export const ServerHeader = ({ server, role }: ServerHeaderProps) => {
         )}
         {isModerator && <DropdownMenuSeparator />}
         {isAdmin && (
-          <DropdownMenuItem className="cursor-pointer text-rose-500">
+          <DropdownMenuItem className="cursor-pointer bg-destructive">
             Delete Server <Trash className="h-4 w-4 ml-auto" />
           </DropdownMenuItem>
         )}
         {!isAdmin && (
-          <DropdownMenuItem className="cursor-pointer text-rose-500">
+          <DropdownMenuItem
+            onClick={() => onOpen("leaveServer", { server })}
+            className="cursor-pointer text-destructive"
+          >
             Leave Server <LogOut className="h-4 w-4 ml-auto" />
           </DropdownMenuItem>
         )}
