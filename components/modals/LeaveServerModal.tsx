@@ -54,6 +54,7 @@ export const LeaveServerModal = () => {
                 });
                 onClose();
                 router.refresh();
+                router.push('/');
               } catch (e) {
                 console.error(e);
               } finally {
