@@ -12,6 +12,7 @@ import { ScrollArea } from "@/components/ui/ScrollArea";
 import { UserAvatar } from "../UserAvatar";
 import { CrownIcon, ShieldCheck } from "lucide-react";
 import { MembersDropdown } from "../MembersDropdown";
+import { RoleIcon } from "../RoleIcon";
 
 const roleIconMap = {
   GUEST: null,
@@ -51,7 +52,7 @@ export const MembersModal = () => {
                 <div className="flex flex-col gap-y-1">
                   <div className="flex gap-2 items-center">
                     {member.profile.name}
-                    {roleIconMap[member.role]}
+                    <RoleIcon role={member.role} />
                   </div>
                   <p className="text-xs">{member.profile.email}</p>
                 </div>

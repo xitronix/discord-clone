@@ -4,6 +4,9 @@ import { Channel, ChannelType } from "@prisma/client";
 import { redirect } from "next/navigation";
 import { ServerHeader } from "./ServerHeader";
 import { ChannelIcon } from "../ChannelIcon";
+import { ScrollArea } from "../ui/ScrollArea";
+import { ServerSearch } from "./ServerSearch";
+import { RoleIcon } from "../RoleIcon";
 
 interface ServerSidebarProps {
   serverId: string;
@@ -61,16 +64,58 @@ export const ServerSidebar = async ({ serverId }: ServerSidebarProps) => {
   return (
     <div className="flex flex-col w-full h-full p-0 text-foreground dark:bg-[#2B2D31] bg-[#F2F3F5]">
       <ServerHeader server={server} role={role} />
-      <div className="p-2">
-        <Channels title="Text channels" channels={channels?.text} />
-        <Channels title="Voice channels" channels={channels?.voice} />
-        <Channels title="Video channels" channels={channels?.video} />
-      </div>
+      <ScrollArea>
+        <div className="p-2">
+          <ServerSearch
+            data={[
+              {
+                type: "channel",
+                label: "Text",
+                data: channels?.text.map(({ id, name, type }) => ({
+                  icon: <ChannelIcon type={type} />,
+                  id,
+                  name,
+                })),
+              },
+              {
+                type: "channel",
+                label: "Voice",
+                data: channels?.voice.map(({ id, name, type }) => ({
+                  icon: <ChannelIcon type={type} />,
+                  id,
+                  name,
+                })),
+              },
+              {
+                type: "channel",
+                label: "Video",
+                data: channels?.video.map(({ id, name, type }) => ({
+                  icon: <ChannelIcon type={type} />,
+                  id,
+                  name,
+                })),
+              },
+              {
+                type: "member",
+                label: "Members",
+                data: members?.map(({ id, profile, role }) => ({
+                  icon: <RoleIcon role={role} />,
+                  id,
+                  name: profile.name,
+                })),
+              },
+            ]}
+          />
+          <Channels title="Text channels" channels={channels?.text} />
+          <Channels title="Voice channels" channels={channels?.voice} />
+          <Channels title="Video channels" channels={channels?.video} />
+        </div>
+      </ScrollArea>
     </div>
   );
 };
 
-const Channels = ({
+export const Channels = ({
   channels,
   title,
 }: {
