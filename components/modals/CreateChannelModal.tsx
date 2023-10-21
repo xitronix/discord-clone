@@ -1,7 +1,7 @@
 "use client";
 
-import { DialogTitle } from "@radix-ui/react-dialog";
 import {
+  DialogTitle,
   Dialog,
   DialogContent,
   DialogFooter,
@@ -73,7 +73,7 @@ export const CreateChannelModal = () => {
   return (
     <Dialog open={isModalOpen} onOpenChange={handleClose}>
       <DialogContent>
-        <DialogHeader>
+        <DialogHeader className="px-6">
           <DialogTitle className="text-center capitalize text-2xl">
             Create channel
           </DialogTitle>

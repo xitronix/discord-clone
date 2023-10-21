@@ -1,8 +1,8 @@
 "use client";
 
-import { DialogTitle } from "@radix-ui/react-dialog";
 import {
   Dialog,
+  DialogTitle,
   DialogContent,
   DialogDescription,
   DialogHeader,
@@ -33,10 +33,10 @@ export const MembersModal = () => {
     <Dialog open={isModalOpen} onOpenChange={onClose}>
       <DialogContent className="p-6">
         <DialogHeader>
-          <DialogTitle className="text-center text-bold text-2xl">
+          <DialogTitle className="text-center text-bold text-xl">
             Manage members
           </DialogTitle>
-          <DialogDescription className="text-center">
+          <DialogDescription>
             {server?.members?.length} Members
           </DialogDescription>
         </DialogHeader>

@@ -1,8 +1,8 @@
 "use client";
 
-import { DialogTitle } from "@radix-ui/react-dialog";
 import {
   Dialog,
+  DialogTitle,
   DialogContent,
   DialogFooter,
   DialogHeader,
@@ -29,7 +29,7 @@ export const LeaveServerModal = () => {
     <Dialog open={isModalOpen} onOpenChange={onClose}>
       <DialogContent className="p-0">
         <DialogHeader className="p-2">
-          <DialogTitle className="text-center text-bold text-2xl">
+          <DialogTitle className="text-center text-bold text-xl">
             Leave &apos;{server?.name}&apos;
           </DialogTitle>
         </DialogHeader>

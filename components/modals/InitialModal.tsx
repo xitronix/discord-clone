@@ -1,8 +1,8 @@
 "use client";
 
-import { DialogTitle } from "@radix-ui/react-dialog";
 import {
   Dialog,
+  DialogTitle,
   DialogContent,
   DialogDescription,
   DialogFooter,
@@ -64,8 +64,8 @@ export const InitialModal = () => {
   return (
     <Dialog open>
       <DialogContent>
-        <DialogHeader>
-          <DialogTitle className="text-center text-bold text-2xl">
+        <DialogHeader className="px-6">
+          <DialogTitle className="text-center text-bold text-xl">
             Create server
           </DialogTitle>
           <DialogDescription className="text-center">
@@ -75,6 +75,7 @@ export const InitialModal = () => {
         </DialogHeader>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)}>
+            <div className="p-6">
             <FormField
               control={form.control}
               name="imageUrl"
@@ -87,7 +88,6 @@ export const InitialModal = () => {
                 </FormItem>
               )}
             ></FormField>
-
             <FormField
               control={form.control}
               name="name"
@@ -107,6 +107,7 @@ export const InitialModal = () => {
                 </FormItem>
               )}
             ></FormField>
+            </div>
             <DialogFooter className="pt-6">
               <Button type="submit" disabled={isLoading} variant="default">
                 Create

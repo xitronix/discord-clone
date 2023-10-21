@@ -1,7 +1,6 @@
 "use client";
 
-import { DialogTitle } from "@radix-ui/react-dialog";
-import { Dialog, DialogContent, DialogHeader } from "../ui/dialog";
+import { Dialog, DialogTitle, DialogContent, DialogHeader } from "../ui/dialog";
 import { useModal } from "@/hooks/useModalStore";
 import { Label } from "../ui/label";
 import { Input } from "../ui/input";
@@ -54,7 +53,7 @@ export const InviteModal = () => {
     <Dialog open={isModalOpen} onOpenChange={onClose}>
       <DialogContent className="p-6">
         <DialogHeader>
-          <DialogTitle className="text-center text-bold text-2xl">
+          <DialogTitle className="text-center text-bold text-xl">
             Invite Friends
           </DialogTitle>
         </DialogHeader>

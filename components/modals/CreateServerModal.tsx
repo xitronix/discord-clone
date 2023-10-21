@@ -1,8 +1,8 @@
 "use client";
 
-import { DialogTitle } from "@radix-ui/react-dialog";
 import {
   Dialog,
+  DialogTitle,
   DialogContent,
   DialogDescription,
   DialogFooter,
@@ -66,11 +66,11 @@ export const CreateServerModal = () => {
   return (
     <Dialog open={isModalOpen} onOpenChange={handleClose}>
       <DialogContent>
-        <DialogHeader>
-          <DialogTitle className="text-center text-bold text-2xl">
+        <DialogHeader className="px-6">
+          <DialogTitle className="text-center text-bold text-xl">
             Create server
           </DialogTitle>
-          <DialogDescription className="text-center">
+          <DialogDescription>
             Customize your server with a name and an picture. You can change it
             later.
           </DialogDescription>

@@ -1,8 +1,8 @@
 "use client";
 
-import { DialogTitle } from "@radix-ui/react-dialog";
 import {
   Dialog,
+  DialogTitle,
   DialogContent,
   DialogFooter,
   DialogHeader,
@@ -11,7 +11,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 import { useModal } from "@/hooks/useModalStore";
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { Label } from "../ui/label";
 
 export const DeleteServerModal = () => {
@@ -34,12 +34,15 @@ export const DeleteServerModal = () => {
   return (
     <Dialog open={isModalOpen} onOpenChange={handleClose}>
       <DialogContent>
-        <DialogHeader>
-          <DialogTitle className="text-center text-bold text-2xl">
+        <DialogHeader className="px-6">
+          <DialogTitle className="text-center text-bold text-xl">
             Delete &apos;{server?.name}&apos;
           </DialogTitle>
         </DialogHeader>
-        <div className="p-6">
+        <div className="p-2 mx-6 bg-yellow-500 rounded-sm">
+          Are you sure you want to delete Delete &apos;{server?.name}&apos;? This action cannot be undone.
+        </div>
+        <div className="px-6">
           <Label className="uppercase text-xs font-bold">
             Enter Server Name
           </Label>
