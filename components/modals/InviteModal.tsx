@@ -52,7 +52,7 @@ export const InviteModal = () => {
 
   return (
     <Dialog open={isModalOpen} onOpenChange={onClose}>
-      <DialogContent>
+      <DialogContent className="p-6">
         <DialogHeader>
           <DialogTitle className="text-center text-bold text-2xl">
             Invite Friends

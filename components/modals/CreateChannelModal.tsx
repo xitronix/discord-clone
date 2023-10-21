@@ -79,61 +79,60 @@ export const CreateChannelModal = () => {
           </DialogTitle>
         </DialogHeader>
         <Form {...form}>
-          <form
-            className="flex flex-col gap-y-4"
-            onSubmit={form.handleSubmit(onSubmit)}
-          >
-            <FormField
-              control={form.control}
-              name="type"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel className="uppercase text-xs font-bold dark:text-zinc-500">
-                    Channel type
-                  </FormLabel>
-                  <FormControl>
-                    <RadioGroup
-                      onValueChange={field.onChange}
-                      defaultValue={field.value}
-                    >
-                      {Object.values(ChannelType).map((type) => (
-                        <ChannelRadioItem
-                          selectedType={field.value}
-                          type={type}
-                          key={type}
-                        />
-                      ))}
-                    </RadioGroup>
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            ></FormField>
-            <FormField
-              control={form.control}
-              name="name"
-              render={({ field }) => (
-                <FormItem className="flex-col h-16">
-                  <FormLabel className="uppercase text-xs font-bold dark:text-zinc-500">
-                    Channel Name
-                  </FormLabel>
-                  <FormControl>
-                    <FormLabel className="relative flex">
-                      <Input
-                        className="dark:bg-[#2B2D31] border-0 focus-visible:ring-0 focus-visible:ring-offset-0 absolute pl-9 h-12"
-                        placeholder="new-channel"
-                        {...field}
-                      />
-                      <ChannelIcon
-                        type={form.getValues().type}
-                        className="h-4 w-4 absolute top-4 left-3"
-                      />
+          <form className="flex flex-col gap-y-4" onSubmit={form.handleSubmit(onSubmit)}>
+            <div className=" px-6">
+              <FormField
+                control={form.control}
+                name="type"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="uppercase text-xs font-bold dark:text-zinc-500">
+                      Channel type
                     </FormLabel>
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            ></FormField>
+                    <FormControl>
+                      <RadioGroup
+                        onValueChange={field.onChange}
+                        defaultValue={field.value}
+                      >
+                        {Object.values(ChannelType).map((type) => (
+                          <ChannelRadioItem
+                            selectedType={field.value}
+                            type={type}
+                            key={type}
+                          />
+                        ))}
+                      </RadioGroup>
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              ></FormField>
+              <FormField
+                control={form.control}
+                name="name"
+                render={({ field }) => (
+                  <FormItem className="flex-col h-16">
+                    <FormLabel className="uppercase text-xs font-bold dark:text-zinc-500">
+                      Channel Name
+                    </FormLabel>
+                    <FormControl>
+                      <FormLabel className="relative flex">
+                        <Input
+                          className="dark:bg-[#2B2D31] border-0 focus-visible:ring-0 focus-visible:ring-offset-0 absolute pl-9 h-12"
+                          placeholder="new-channel"
+                          {...field}
+                        />
+                        <ChannelIcon
+                          type={form.getValues().type}
+                          className="h-4 w-4 absolute top-4 left-3"
+                        />
+                      </FormLabel>
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              ></FormField>
+            </div>
             <DialogFooter className="mt-4">
               <Button type="submit" disabled={isLoading} variant="default">
                 Create

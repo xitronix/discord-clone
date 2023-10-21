@@ -77,38 +77,43 @@ export const CreateServerModal = () => {
         </DialogHeader>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)}>
-            <FormField
-              control={form.control}
-              name="imageUrl"
-              render={({ field }) => (
-                <FormItem className="flex flex-col w-full justify-center items-center pb-4">
-                  <FormControl>
-                    <UploadFile onChange={field.onChange} value={field.value} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            ></FormField>
+            <div className="p-6">
+              <FormField
+                control={form.control}
+                name="imageUrl"
+                render={({ field }) => (
+                  <FormItem className="flex flex-col w-full justify-center items-center pb-4">
+                    <FormControl>
+                      <UploadFile
+                        onChange={field.onChange}
+                        value={field.value}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              ></FormField>
 
-            <FormField
-              control={form.control}
-              name="name"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel className="uppercase text-xs font-bold dark:text-zinc-500">
-                    Server Name
-                  </FormLabel>
-                  <FormControl>
-                    <Input
-                      className="dark:bg-zinc-600/50 border-0 focus-visible:ring-0 focus-visible:ring-offset-0"
-                      placeholder="Enter server name"
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            ></FormField>
+              <FormField
+                control={form.control}
+                name="name"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="uppercase text-xs font-bold dark:text-zinc-500">
+                      Server Name
+                    </FormLabel>
+                    <FormControl>
+                      <Input
+                        className="dark:bg-zinc-600/50 border-0 focus-visible:ring-0 focus-visible:ring-offset-0"
+                        placeholder="Enter server name"
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              ></FormField>
+            </div>
             <DialogFooter className="pt-6">
               <Button type="submit" disabled={isLoading} variant="default">
                 Create
