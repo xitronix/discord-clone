@@ -98,7 +98,7 @@ export const InitialModal = () => {
                   </FormLabel>
                   <FormControl>
                     <Input
-                      className="dark:bg-zinc-600/50 border-0 focus-visible:ring-0 focus-visible:ring-offset-0"
+                      className="dark:bg-zinc-600/50 focus-visible:ring-0 focus-visible:ring-offset-0"
                       placeholder="Enter server name"
                       {...field}
                     />

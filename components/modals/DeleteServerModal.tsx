@@ -50,7 +50,7 @@ export const DeleteServerModal = () => {
             id={server?.id}
             value={serverName}
             onChange={(event) => setServerName(event.target.value)}
-            className="dark:bg-zinc-600/50 border-0 focus-visible:ring-0 focus-visible:ring-offset-0"
+            className="dark:bg-zinc-600/50 focus-visible:ring-0 focus-visible:ring-offset-0"
             placeholder="Enter server name"
           />
           <p className={"text-sm font-medium text-destructive"}>{error} </p>

@@ -38,7 +38,7 @@ export const MembersSidebar = async ({ serverId }: MembersSidebarProps) => {
 
   return (
     <div className="fixed md:flex z-20 w-60 flex-col right-0 inset-y-0">
-      <div className="flex flex-col w-full h-full p-4 gap-y-3 text-foreground dark:bg-secondary-background bg-[#F2F3F5]">
+      <div className="flex flex-col w-full h-full p-4 gap-y-3 text-foreground bg-secondary-background">
         <div className="uppercase text-xs font-semibold pt-4 flex justify-between">
           <p>Members</p>
           <MemberTooltip server={server} role={role} />
