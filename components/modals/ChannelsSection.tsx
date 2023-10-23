@@ -2,7 +2,7 @@
 
 import { useModal } from "@/hooks/useModalStore";
 import { Channel, MemberRole } from "@prisma/client";
-import { Plus, Settings } from "lucide-react";
+import { Plus, Settings, Trash } from "lucide-react";
 import ActionTooltip from "@/components/ActionTooltip";
 import { ChannelIcon } from "@/components/ChannelIcon";
 import { ServerWithMembersWithProfile } from "../server/ServerHeader";
@@ -13,7 +13,7 @@ export const ChannelsSection = ({
   role,
   server,
 }: {
-  channels?: Pick<Channel, "name" | "id" | "type">[];
+  channels?: Channel[];
   title: string;
   role: MemberRole;
   server: ServerWithMembersWithProfile;
@@ -33,17 +33,23 @@ export const ChannelsSection = ({
           </ActionTooltip>
         )}
       </div>
-      {channels?.map(({ name, id, type }) => (
+      {channels?.map((channel) => (
         <div
-          key={id}
-          className="group h-10 flex w-full justify-start my-1 p-2 gap-x-2 cursor-pointer rounded-md text-sm font-medium focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground"
+          key={channel.id}
+          className="group h-8 flex w-full justify-start my-1 p-1.5 gap-x-2 cursor-pointer rounded-md text-sm font-medium focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground"
         >
-          <ChannelIcon className="h-4 w-4 flex-shrink-0" type={type} />
-          {name}
+          <ChannelIcon className="h-4 w-4 flex-shrink-0" type={channel.type} />
+          {channel.name}
           {role !== MemberRole.GUEST && (
-            <div className="ml-auto flex">
+            <div className="ml-auto flex gap-x-1">
               <ActionTooltip label="edit channel" side="top">
-                <Settings className="h-4 w-4 hidden group-hover:block hover:text-primary-foreground" />
+                <Settings className="h-4 w-4 hidden group-hover:block hover:text-primary-foreground transition" />
+              </ActionTooltip>
+              <ActionTooltip label="delete channel" side="top">
+                <Trash
+                  onClick={() => onOpen("deleteChannel", { server, channel })}
+                  className="h-4 w-4 hidden group-hover:block hover:text-primary-foreground transition"
+                />
               </ActionTooltip>
             </div>
           )}

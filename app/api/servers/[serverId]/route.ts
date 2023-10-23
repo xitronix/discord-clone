@@ -48,7 +48,7 @@ export const DELETE = async (
 
     return NextResponse.json({ server });
   } catch (e) {
-    console.error("[/api/servers/[serverId]/invite-code] [DELETE]", e);
+    console.error("[/api/servers/[serverId]] [DELETE]", e);
     return new NextResponse("Internal Error", { status: 500 });
   }
 };
