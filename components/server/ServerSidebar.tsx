@@ -7,6 +7,8 @@ import { ChannelIcon } from "../ChannelIcon";
 import { ScrollArea } from "../ui/ScrollArea";
 import { ServerSearch } from "./ServerSearch";
 import { RoleIcon } from "../RoleIcon";
+import { Separator } from "../ui/separator";
+import { ChannelsSection } from "../modals/ChannelsSection";
 
 interface ServerSidebarProps {
   serverId: string;
@@ -57,7 +59,7 @@ export const ServerSidebar = async ({ serverId }: ServerSidebarProps) => {
     (member) => member.profileId === profile.id
   )?.role;
 
-  if (!server) {
+  if (!server || !role) {
     return redirect("/");
   }
 
@@ -106,30 +108,27 @@ export const ServerSidebar = async ({ serverId }: ServerSidebarProps) => {
               },
             ]}
           />
-          <Channels title="Text channels" channels={channels?.text} />
-          <Channels title="Voice channels" channels={channels?.voice} />
-          <Channels title="Video channels" channels={channels?.video} />
+          <Separator className="mt-2" />
+          <ChannelsSection
+            server={server}
+            role={role}
+            title="Text channels"
+            channels={channels?.text}
+          />
+          <ChannelsSection
+            server={server}
+            role={role}
+            title="Voice channels"
+            channels={channels?.voice}
+          />
+          <ChannelsSection
+            server={server}
+            role={role}
+            title="Video channels"
+            channels={channels?.video}
+          />
         </div>
       </ScrollArea>
-    </div>
-  );
-};
-
-export const Channels = ({
-  channels,
-  title,
-}: {
-  channels?: Channel[];
-  title: string;
-}) => {
-  return (
-    <div>
-      <div className="uppercase text-xs font-bold pt-4">{title}</div>
-      {channels?.map(({ name, id, type }) => (
-        <div key={id} className="flex py-1 px-2 gap-2">
-          <ChannelIcon className="h-4 w-4" type={type} /> {name}
-        </div>
-      ))}
     </div>
   );
 };
