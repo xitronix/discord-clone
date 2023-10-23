@@ -4,7 +4,7 @@ import { CrownIcon, ShieldCheck } from "lucide-react";
 
 interface RoleIconProps {
   role: string;
-  className: string;
+  className?: string;
 }
 
 export const RoleIcon = ({ role, className }: RoleIconProps) => {

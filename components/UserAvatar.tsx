@@ -10,7 +10,7 @@ export const UserAvatar = ({ src, className, name }: UserAvatarProps) => {
   return (
     <Avatar className={cn("h-6 w-6 md:h-10 md:w-10", className)}>
      <AvatarImage src={src} />
-     <AvatarFallback>{name.charAt(0)}</AvatarFallback>
+     <AvatarFallback className="bg-primary text-white">{name.charAt(0)}</AvatarFallback>
     </Avatar>
   );
 };

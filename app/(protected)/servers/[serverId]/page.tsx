@@ -1,7 +1,11 @@
 "use client";
-const ServerIdPage = () => {
-  
-  return <div>Server Page</div>;
+
+const ServerIdPage = ({
+  params: { serverId },
+}: {
+  params: { serverId: string };
+}) => {
+  return <div> ServerId Page [{serverId}]</div>;
 };
 
 export default ServerIdPage;

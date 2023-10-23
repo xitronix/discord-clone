@@ -10,15 +10,10 @@ import {
 import { useModal } from "@/hooks/useModalStore";
 import { ScrollArea } from "@/components/ui/ScrollArea";
 import { UserAvatar } from "../UserAvatar";
-import { CrownIcon, ShieldCheck } from "lucide-react";
 import { MembersDropdown } from "../MembersDropdown";
-import { RoleIcon } from "../RoleIcon";
+import { Member } from "../Member";
 
-const roleIconMap = {
-  GUEST: null,
-  MODERATOR: <ShieldCheck className="h-5 w-5" />,
-  ADMIN: <CrownIcon className="h-4 w-4" />,
-};
+
 
 export const MembersModal = () => {
   const {
@@ -50,10 +45,7 @@ export const MembersModal = () => {
                   name={member.profile.name}
                 />
                 <div className="flex flex-col gap-y-1">
-                  <div className="flex gap-2 items-center">
-                    {member.profile.name}
-                    <RoleIcon role={member.role} />
-                  </div>
+                  <Member name={member.profile.name} role={member.role} />
                   <p className="text-xs">{member.profile.email}</p>
                 </div>
               </div>

@@ -2,7 +2,7 @@
 
 import { useModal } from "@/hooks/useModalStore";
 import { Channel, MemberRole } from "@prisma/client";
-import { Plus } from "lucide-react";
+import { Plus, Settings } from "lucide-react";
 import ActionTooltip from "@/components/ActionTooltip";
 import { ChannelIcon } from "@/components/ChannelIcon";
 import { ServerWithMembersWithProfile } from "../server/ServerHeader";
@@ -34,8 +34,19 @@ export const ChannelsSection = ({
         )}
       </div>
       {channels?.map(({ name, id, type }) => (
-        <div key={id} className="flex py-1 px-2 gap-2">
-          <ChannelIcon className="h-4 w-4" type={type} /> {name}
+        <div
+          key={id}
+          className="group h-10 flex w-full justify-start my-1 p-2 gap-x-2 cursor-pointer rounded-md text-sm font-medium focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground"
+        >
+          <ChannelIcon className="h-4 w-4 flex-shrink-0" type={type} />
+          {name}
+          {role !== MemberRole.GUEST && (
+            <div className="ml-auto flex">
+              <ActionTooltip label="edit channel" side="top">
+                <Settings className="h-4 w-4 hidden group-hover:block hover:text-primary-foreground" />
+              </ActionTooltip>
+            </div>
+          )}
         </div>
       ))}
     </div>
