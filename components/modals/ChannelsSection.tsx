@@ -43,7 +43,10 @@ export const ChannelsSection = ({
           {role !== MemberRole.GUEST && (
             <div className="ml-auto flex gap-x-1">
               <ActionTooltip label="edit channel" side="top">
-                <Settings className="h-4 w-4 hidden group-hover:block hover:text-primary-foreground transition" />
+                <Settings
+                  onClick={() => onOpen("editChannel", { server, channel })}
+                  className="h-4 w-4 hidden group-hover:block hover:text-primary-foreground transition"
+                />
               </ActionTooltip>
               <ActionTooltip label="delete channel" side="top">
                 <Trash
