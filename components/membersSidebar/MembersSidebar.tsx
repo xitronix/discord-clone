@@ -4,6 +4,7 @@ import { MemberTooltip } from "./MemberTooltip";
 import { db } from "@/lib/db";
 import { redirect } from "next/navigation";
 import { UserAvatar } from "../UserAvatar";
+import { MemberLink } from "./MemberLink";
 
 interface MembersSidebarProps {
   serverId: string;
@@ -44,18 +45,7 @@ export const MembersSidebar = async ({ serverId }: MembersSidebarProps) => {
           <MemberTooltip server={server} role={role} />
         </div>
         {server.members?.map(({ id, role, profile }) => (
-          <div key={id} className="flex justify-start items-center gap-3">
-            <UserAvatar
-              className="md:h-8 md:w-8"
-              src={profile.imageUrl}
-              name={profile.email}
-            />
-            <Member
-              className="text-ellipsis overflow-hidden whitespace-nowrap w-32 text-sm"
-              name={profile.name}
-              role={role}
-            />
-          </div>
+          <MemberLink key={id} profile={profile} role={role} memberId={id} />
         ))}
       </div>
     </div>

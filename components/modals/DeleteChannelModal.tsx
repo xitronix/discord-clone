@@ -65,7 +65,7 @@ export const DeleteChannelModal = () => {
             }}
             variant="destructive"
           >
-            Delete Server
+            Delete Channel
           </Button>
         </DialogFooter>
       </DialogContent>

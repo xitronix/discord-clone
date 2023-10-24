@@ -14,11 +14,19 @@ const SetupPage = async () => {
         },
       },
     },
+    include: {
+      channels: true,
+    },
   });
 
-  if (server) return redirect(`/servers/${server.id}`);
+  if (server && server.channels)
+    return redirect(`/servers/${server.id}/${server.channels[0].id}`);
 
-  return <InitialModal />;
+  if (!server) {
+    return <InitialModal />;
+  }
+
+  return redirect(`/servers/${server.id}}`);
 };
 
 export default SetupPage;
