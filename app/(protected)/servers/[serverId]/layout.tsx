@@ -1,4 +1,3 @@
-import { MembersSidebar } from "@/components/membersSidebar/MembersSidebar";
 import { ServerSidebar } from "@/components/server/ServerSidebar";
 import { currentProfile } from "@/lib/currentProfile";
 import { db } from "@/lib/db";
@@ -29,12 +28,11 @@ const ServerIdLayout = async ({
   }
 
   return (
-    <div className="h-full">
+    <div className="h-full flex">
       <div className="fixed hidden md:flex z-20 w-60 flex-col inset-y-0">
         <ServerSidebar serverId={server.id} />
       </div>
-      <main className="h-full md:px-60">{children}</main>
-      <MembersSidebar serverId={server.id} />
+      <main className="h-full pl-20 md:pl-60 w-full">{children}</main>
     </div>
   );
 };

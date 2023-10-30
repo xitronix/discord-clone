@@ -1,48 +1,34 @@
-import { currentProfile } from "@/lib/currentProfile";
-import { Member } from "../Member";
+"use client";
+
+import { useMembers } from "@/hooks/useMembers";
+import { ServerWithMembersWithProfile } from "../server/ServerHeader";
 import { MemberTooltip } from "./MemberTooltip";
-import { db } from "@/lib/db";
-import { redirect } from "next/navigation";
-import { UserAvatar } from "../UserAvatar";
 import { MemberLink } from "./MemberLink";
 
-interface MembersSidebarProps {
-  serverId: string;
-}
+export const MembersSidebar = ({
+  server,
+  profileId,
+}: {
+  server: ServerWithMembersWithProfile | null;
+  profileId: string;
+}) => {
+  const { isOpen } = useMembers();
 
-export const MembersSidebar = async ({ serverId }: MembersSidebarProps) => {
-  const profile = await currentProfile();
-  const server = await db.server.findUnique({
-    where: {
-      id: serverId,
-    },
-    include: {
-      channels: {
-        orderBy: {
-          createdAt: "asc",
-        },
-      },
-      members: {
-        include: { profile: true },
-        orderBy: { role: "asc" },
-      },
-    },
-  });
-
-  const role = server?.members.find(
-    (member) => member.profileId === profile.id
+  const currentRole = server?.members?.find(
+    (member) => member.profileId === profileId
   )?.role;
 
-  if (!server || !role) {
-    return redirect("/");
+  if (!server || !currentRole) {
+    return null;
   }
+  if (!isOpen) return null;
 
   return (
-    <div className="fixed md:flex z-20 w-60 flex-col right-0 inset-y-0">
+    <div className="md:flex z-20 w-60 flex-col">
       <div className="flex flex-col w-full h-full p-4 gap-y-3 text-foreground bg-secondary-background">
         <div className="uppercase text-xs font-semibold pt-4 flex justify-between">
           <p>Members</p>
-          <MemberTooltip server={server} role={role} />
+          <MemberTooltip server={server} role={currentRole} />
         </div>
         {server.members?.map(({ id, role, profile }) => (
           <MemberLink key={id} profile={profile} role={role} memberId={id} />
