@@ -1,5 +1,5 @@
 import { MobileToggle } from "@/components/MobileToggle";
-import { ChatHeader } from "@/components/chat/ChatHeader";
+import { ChannelHeader } from "@/components/chat/ChannelHeader";
 import { MembersSidebar } from "@/components/membersSidebar/MembersSidebar";
 import { currentProfile } from "@/lib/currentProfile";
 import { db } from "@/lib/db";
@@ -53,9 +53,9 @@ const ChannelPage = async ({ params }: ChannelPageProps) => {
 
   return (
     <div className="h-full flex flex-col">
-      <ChatHeader channel={channel}>
+      <ChannelHeader channel={channel}>
         <MobileToggle serverId={params.serverId} />
-      </ChatHeader>
+      </ChannelHeader>
       <div className="flex h-full">
         <div className="w-full">
           Channel Page <br />

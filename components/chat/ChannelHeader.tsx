@@ -5,12 +5,12 @@ import { ChannelIcon } from "../ChannelIcon";
 import { Users2 } from "lucide-react";
 import { useMembers } from "@/hooks/useMembers";
 
-interface ChatHeaderProps {
+interface ChannelHeaderProps {
   channel: Channel;
   children: React.ReactNode;
 }
 
-export const ChatHeader = ({ channel, children }: ChatHeaderProps) => {
+export const ChannelHeader = ({ channel, children }: ChannelHeaderProps) => {
   const { toggle } = useMembers();
   return (
     <div className="flex items-center font-semibold w-full px-3 h-12 border-b-2 border-secondary justify-between">
