@@ -47,7 +47,6 @@ const ChannelPage = async ({ params }: ChannelPageProps) => {
   });
 
   if (!channel || !member) {
-    console.log("redirect", !channel, !member);
     return redirect("/");
   }
 

@@ -21,7 +21,7 @@ const RegisterPage = () => {
     if (email && password === passwordRepeat)
       createUserWithEmailAndPassword(auth, email as string, password as string)
         .then((authUser) => {
-          console.log("Success. The user is created in Firebase");
+          console.info("Success. The user is created in Firebase");
         })
         .catch((error) => {
           // An error occurred. Set error message to be displayed to user
