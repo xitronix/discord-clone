@@ -52,12 +52,14 @@ const ChannelPage = async ({ params }: ChannelPageProps) => {
   }
 
   return (
-    <div className="h-full flex flex-col w-full">
+    <div className="h-full flex flex-col">
       <ChatHeader channel={channel} />
       <div className="flex h-full">
-        Channel Page <br />
-        ServerId {params.serverId}
-        ChannelId {params.channelId}
+        <div className="w-full">
+          Channel Page <br />
+          ServerId {params.serverId}
+          ChannelId {params.channelId}
+        </div>
         <MembersSidebar server={server} profileId={profile.id} />
       </div>
     </div>
