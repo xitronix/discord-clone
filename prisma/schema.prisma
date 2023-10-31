@@ -22,6 +22,10 @@ model Profile {
   servers   Server[]
   members   Member[]
   channels  Channel[]
+
+  conversationsInitiated DMChannel[]     @relation("owner")
+  conversationsRequested DMChannel[]     @relation("recipient")
+  DirectMessage          DirectMessage[]
 }
 
 model Server {
@@ -61,6 +65,8 @@ model Member {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
+  messages Message[]
+
   @@index([profileId])
   @@index([serverId])
 }
@@ -85,6 +91,8 @@ model Channel {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
+  messages Message[]
+
   @@index([profileId])
   @@index([serverId])
 }
@@ -92,4 +100,61 @@ model Channel {
 model ServerImage {
   id    String @id @default(uuid())
   image Bytes  @db.ByteA
+}
+
+model Message {
+  id      String @id @default(uuid())
+  content String
+
+  fileUrl String? @db.Text
+
+  memberId String
+  member   Member @relation(fields: [memberId], references: [id], onDelete: Cascade)
+
+  channelId String
+  channel   Channel @relation(fields: [channelId], references: [id], onDelete: Cascade)
+
+  deleted Boolean @default(false)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([memberId])
+  @@index([channelId])
+}
+
+model DMChannel {
+  id String @id @default(uuid())
+
+  ownerId String
+  owner   Profile @relation("owner", fields: [ownerId], references: [id], onDelete: Cascade)
+
+  recipientId   String
+  recipient     Profile         @relation("recipient", fields: [recipientId], references: [id], onDelete: Cascade)
+  DirectMessage DirectMessage[]
+
+  @@unique([ownerId, recipientId])
+  @@index([ownerId])
+  @@index([recipientId])
+}
+
+model DirectMessage {
+  id      String @id @default(uuid())
+  content String
+
+  fileUrl String? @db.Text
+
+  profileId String
+  profile   Profile @relation(fields: [profileId], references: [id], onDelete: Cascade)
+
+  dmChannelId String
+  dmChannel   DMChannel @relation(fields: [dmChannelId], references: [id], onDelete: Cascade)
+
+  deleted Boolean @default(false)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([profileId])
+  @@index([dmChannelId])
 }

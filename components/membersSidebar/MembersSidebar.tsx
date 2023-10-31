@@ -31,7 +31,7 @@ export const MembersSidebar = ({
           <MemberTooltip server={server} role={currentRole} />
         </div>
         {server.members?.map(({ id, role, profile }) => (
-          <MemberLink key={id} profile={profile} role={role} memberId={id} />
+          <MemberLink key={id} profile={profile} role={role} userProfileId={profileId} />
         ))}
       </div>
     </div>
