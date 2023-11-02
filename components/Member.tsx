@@ -3,7 +3,7 @@ import { RoleIcon } from "./RoleIcon";
 
 interface MemberProps {
   name: string;
-  role: MemberRole;
+  role?: MemberRole;
   className?: string;
 }
 

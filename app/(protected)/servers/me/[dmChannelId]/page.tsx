@@ -1,4 +1,4 @@
-import { getOrCreateDMChannel } from "@/lib/channel";
+import { DmChannelHeader } from "@/components/dm/DMChannelHeader";
 import { currentProfile } from "@/lib/currentProfile";
 import { db } from "@/lib/db";
 import { redirect } from "next/navigation";
@@ -14,16 +14,29 @@ const MemberChatPage = async ({
       id: params.dmChannelId,
       OR: [{ ownerId: profile.id }, { recipientId: profile.id }],
     },
+    include: {
+      owner: true,
+      recipient: true,
+    },
   });
+
   if (!dmChannel) {
     return redirect("/");
   }
+
+  const { owner, recipient } = dmChannel;
+
+  const otherProfile = owner.id === profile.id ? recipient : owner;
   return (
     <div>
+      <DmChannelHeader
+        name={otherProfile.name || otherProfile.email}
+        imageUrl={otherProfile.imageUrl}
+      />
       DM <br />
       ChannelId {dmChannel.id} <br />
-      Owner {dmChannel.ownerId}
-      Recipient {dmChannel.ownerId}
+      Me {profile.id}
+      Recipient {otherProfile.id}
     </div>
   );
 };

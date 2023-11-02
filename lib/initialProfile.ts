@@ -19,7 +19,7 @@ export const initialProfile = async () => {
   const newProfile = await db.profile.create({
     data: {
       userId,
-      name: `${name}`,
+      name: `${name || email}`,
       imageUrl: picture || "",
       email,
     },
