@@ -1,4 +1,5 @@
 import { UserAvatar } from "../UserAvatar";
+import { SocketIndicator } from "../SocketIndicator";
 
 interface DmChannelHeaderProps {
   name: string;
@@ -16,6 +17,9 @@ export const DmChannelHeader = ({
       {children}
       <UserAvatar className="md:h-6 md:w-6" src={imageUrl} name={name} />
       {name}
+      <div className="ml-auto flex items-center">
+        <SocketIndicator />
+      </div>
     </div>
   );
 };
