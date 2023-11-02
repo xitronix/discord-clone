@@ -29,10 +29,7 @@ const MemberChatPage = async ({
   const otherProfile = owner.id === profile.id ? recipient : owner;
   return (
     <div>
-      <DmChannelHeader
-        name={otherProfile.name || otherProfile.email}
-        imageUrl={otherProfile.imageUrl}
-      />
+      
       DM <br />
       ChannelId {dmChannel.id} <br />
       Me {profile.id}

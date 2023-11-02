@@ -1,6 +1,7 @@
 import { MobileToggle } from "@/components/MobileToggle";
 import { ChannelHeader } from "@/components/chat/ChannelHeader";
 import { MembersSidebar } from "@/components/membersSidebar/MembersSidebar";
+import { ServerSidebar } from "@/components/server/ServerSidebar";
 import { currentProfile } from "@/lib/currentProfile";
 import { db } from "@/lib/db";
 import { redirect } from "next/navigation";
@@ -54,7 +55,9 @@ const ChannelPage = async ({ params }: ChannelPageProps) => {
   return (
     <div className="h-full flex flex-col">
       <ChannelHeader channel={channel}>
-        <MobileToggle serverId={params.serverId} />
+        <MobileToggle>
+          <ServerSidebar serverId={params.serverId} />
+        </MobileToggle>
       </ChannelHeader>
       <div className="flex h-full">
         <div className="w-full">

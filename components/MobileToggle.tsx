@@ -6,9 +6,8 @@ import {
 } from "@/components/ui/sheet";
 import { Button } from "./ui/button";
 import { NavSidebar } from "./navigation/NavSidebar";
-import { ServerSidebar } from "./server/ServerSidebar";
 
-export const MobileToggle = ({ serverId }: { serverId: string }) => {
+export const MobileToggle = ({ children }: { children: React.ReactNode }) => {
   return (
     <Sheet>
       <SheetTrigger asChild>
@@ -20,7 +19,7 @@ export const MobileToggle = ({ serverId }: { serverId: string }) => {
         <div className="w-20">
           <NavSidebar />
         </div>
-        <ServerSidebar serverId={serverId} />
+        {children}
       </SheetContent>
     </Sheet>
   );
