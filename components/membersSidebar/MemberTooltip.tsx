@@ -1,10 +1,10 @@
 "use client";
 
 import { MemberRole } from "@prisma/client";
-import { ServerWithMembersWithProfile } from "../server/ServerHeader";
 import { Settings } from "lucide-react";
 import ActionTooltip from "../ActionTooltip";
 import { useModal } from "@/hooks/useModalStore";
+import { ServerWithMembersWithProfile } from "@/types";
 
 interface MemberTooltipProps {
   server: ServerWithMembersWithProfile;

@@ -1,16 +1,15 @@
 import { currentProfile } from "@/lib/currentProfile";
-import { DMChannel, Profile } from "@prisma/client";
-import { UserAvatar } from "../UserAvatar";
 import { cn } from "@/lib";
 import { MemberLink } from "../membersSidebar/MemberLink";
+import { DMChannel, Profile } from "@prisma/client";
 
-export type DMChannelWithProfiles = DMChannel & {
+export type DMChannelWithProfile = DMChannel & {
   owner: Profile;
   recipient: Profile;
 };
 
 interface DmSidebarProps {
-  dmChannels: DMChannelWithProfiles[];
+  dmChannels: DMChannelWithProfile[];
   dmChannelId: string;
 }
 

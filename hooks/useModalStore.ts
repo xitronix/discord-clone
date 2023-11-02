@@ -1,4 +1,4 @@
-import { ServerWithMembersWithProfile } from "@/components/server/ServerHeader";
+import { ServerWithMembersWithProfile } from "@/types";
 import { Channel } from "@prisma/client";
 import { create } from "zustand";
 

@@ -18,12 +18,7 @@ import {
   Users,
 } from "lucide-react";
 import { useModal } from "@/hooks/useModalStore";
-
-export type MembersWithProfile = Member & { profile: Profile };
-
-export type ServerWithMembersWithProfile = Server & {
-  members: MembersWithProfile[];
-};
+import { ServerWithMembersWithProfile } from "@/types";
 
 interface ServerHeaderProps {
   server: ServerWithMembersWithProfile;

@@ -12,10 +12,10 @@ import {
   DropdownMenuSeparator,
 } from "@/components/ui/DropdownMenu";
 import { Member, MemberRole } from "@prisma/client";
-import { Check, Loader, Loader2, MoreVertical } from "lucide-react";
+import { Check, Loader2, MoreVertical } from "lucide-react";
 import { useState } from "react";
-import { MembersWithProfile } from "./server/ServerHeader";
 import { useModal } from "@/hooks/useModalStore";
+import { MembersWithProfile } from "@/types";
 
 interface MembersDropdownProps {
   member: MembersWithProfile;

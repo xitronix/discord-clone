@@ -1,9 +1,9 @@
 "use client";
 
 import { useMembers } from "@/hooks/useMembers";
-import { ServerWithMembersWithProfile } from "../server/ServerHeader";
 import { MemberTooltip } from "./MemberTooltip";
 import { MemberLink } from "./MemberLink";
+import { ServerWithMembersWithProfile } from "@/types";
 
 export const MembersSidebar = ({
   server,

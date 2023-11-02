@@ -5,9 +5,9 @@ import { Channel, MemberRole } from "@prisma/client";
 import { Plus, Settings, Trash } from "lucide-react";
 import ActionTooltip from "@/components/ActionTooltip";
 import { ChannelIcon } from "@/components/ChannelIcon";
-import { ServerWithMembersWithProfile } from "../server/ServerHeader";
 import { useParams, useRouter } from "next/navigation";
 import { cn } from "@/lib";
+import { ServerWithMembersWithProfile } from "@/types";
 
 export const ChannelsSection = ({
   channels,
