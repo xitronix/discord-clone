@@ -48,3 +48,15 @@ export const createDMChannel = async (ownerId: string, recipientId: string) => {
     return null;
   }
 };
+
+export const getAllDmChannels = async (profileId: string) => {
+  return db.dMChannel.findMany({
+    where: {
+      OR: [{ ownerId: profileId }, { recipientId: profileId }],
+    },
+    include: {
+      owner: true,
+      recipient: true,
+    },
+  });
+};

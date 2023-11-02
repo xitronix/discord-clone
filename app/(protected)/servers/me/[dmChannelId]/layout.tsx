@@ -1,6 +1,6 @@
 import { DmSidebar } from "@/components/dm/DmSidebar";
+import { getAllDmChannels } from "@/lib/channel";
 import { currentProfile } from "@/lib/currentProfile";
-import { db } from "@/lib/db";
 import { redirect } from "next/navigation";
 
 const DmChannelLayout = async ({
@@ -12,15 +12,7 @@ const DmChannelLayout = async ({
 }) => {
   const profile = await currentProfile();
 
-  const dmChannels = await db.dMChannel.findMany({
-    where: {
-      OR: [{ ownerId: profile.id }, { recipientId: profile.id }],
-    },
-    include: {
-      owner: true,
-      recipient: true,
-    },
-  });
+  const dmChannels = await getAllDmChannels(profile.id);
 
   if (dmChannels.length === 0) {
     redirect("/");
