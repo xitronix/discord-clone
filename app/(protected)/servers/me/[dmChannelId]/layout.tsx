@@ -33,7 +33,7 @@ const DmChannelLayout = async ({
       <div className="fixed hidden md:flex z-20 w-60 flex-col inset-y-0">
         <DmSidebar dmChannelId={params.dmChannelId} dmChannels={dmChannels} />
       </div>
-      <main className="h-full md:pl-60 w-full">
+      <main className="h-full md:pl-60 w-full flex flex-col">
         <DmChannelHeader
           name={otherProfile.name || otherProfile.email}
           imageUrl={otherProfile.imageUrl}
