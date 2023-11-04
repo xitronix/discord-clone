@@ -4,10 +4,12 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
-import { Button } from "../ui/button";
-import { Plus, Smile } from "lucide-react";
-import { Input } from "../ui/input";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import { ChatAttachment } from "./ChatAttachment";
+import { EmojiPicker } from "@/components/EmojiPicker";
+import { useRouter } from "next/navigation";
+import { useRef } from "react";
 
 interface ChatInputProps {
   apiUrl: string;
@@ -29,6 +31,8 @@ export const ChatInput = ({ apiUrl, name, type, query }: ChatInputProps) => {
       fileUrl: "",
     },
   });
+  const inputRef = useRef<HTMLInputElement>(null);
+  const router = useRouter();
 
   const isLoading = form.formState.isLoading;
 
@@ -41,6 +45,8 @@ export const ChatInput = ({ apiUrl, name, type, query }: ChatInputProps) => {
           body: JSON.stringify(values),
         }
       );
+      form.reset();
+      router.refresh();
     } catch (error) {
       console.error(error);
     }
@@ -76,8 +82,21 @@ export const ChatInput = ({ apiUrl, name, type, query }: ChatInputProps) => {
                       size="icon"
                       type="button"
                       className="absolute flex justify-center items-center w-6 h-6 top-5 right-5 rounded-full"
+                      asChild
                     >
-                      <Smile className="text-foreground hover:text-primary-foreground" />
+                      <EmojiPicker
+                        onChange={(emoji) => {
+                          const selectionStart =
+                            inputRef.current?.selectionStart || 0;
+                          const selectionEnd =
+                            inputRef.current?.selectionEnd || 0;
+                          field.onChange(
+                            field.value.slice(0, selectionStart) +
+                              emoji +
+                              field.value.slice(selectionEnd)
+                          );
+                        }}
+                      />
                     </Button>
                     <Input
                       disabled={isLoading}
@@ -85,7 +104,9 @@ export const ChatInput = ({ apiUrl, name, type, query }: ChatInputProps) => {
                       placeholder={`Message ${
                         type === "dm" ? "@" : "#"
                       }${name}`}
-                      {...field}
+                      onChange={field.onChange}
+                      value={field.value}
+                      ref={inputRef}
                     />
                   </>
                 </FormControl>
