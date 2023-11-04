@@ -1,14 +1,10 @@
 "use client";
 
-import {
-  DropdownMenu,
-  DropdownMenuTrigger,
-  DropdownMenuContent,
-} from "@radix-ui/react-dropdown-menu";
 import { Plus } from "lucide-react";
 import { UploadFile } from "../UploadFile";
 import { Button } from "../ui/button";
 import { useState } from "react";
+import { PopoverContent, Popover, PopoverTrigger } from "../ui/popover";
 
 interface ChatAttachmentProps {
   onChange: (url?: string) => void;
@@ -19,7 +15,7 @@ export const ChatAttachment = ({ onChange, value }: ChatAttachmentProps) => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <DropdownMenu
+    <Popover
       open={!!value || isOpen}
       onOpenChange={(open) => {
         if (!!value) {
@@ -27,9 +23,8 @@ export const ChatAttachment = ({ onChange, value }: ChatAttachmentProps) => {
         }
         setIsOpen(open);
       }}
-      modal={false}
     >
-      <DropdownMenuTrigger className="focus:outline-none" asChild>
+      <PopoverTrigger className="focus:outline-none" asChild>
         <Button
           variant="secondary"
           size="icon"
@@ -38,17 +33,17 @@ export const ChatAttachment = ({ onChange, value }: ChatAttachmentProps) => {
         >
           <Plus className="text-background" />
         </Button>
-      </DropdownMenuTrigger>
-      <DropdownMenuContent
+      </PopoverTrigger>
+      <PopoverContent
         side="top"
-        className="translate-x-2/4 -translate-y-2 pb-5 text-xs font-meduim space-y-1"
+        className="md:translate-x-[40%] mb-2 pb-5 text-xs font-meduim w-fit"
       >
         <UploadFile
           onChange={onChange}
           value={value}
           endpoint="/api/server-image"
         />
-      </DropdownMenuContent>
-    </DropdownMenu>
+      </PopoverContent>
+    </Popover>
   );
 };
