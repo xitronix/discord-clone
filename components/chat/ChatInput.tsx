@@ -81,7 +81,6 @@ export const ChatInput = ({ apiUrl, name, type, query }: ChatInputProps) => {
                       variant="ghost"
                       size="icon"
                       type="button"
-                      className="absolute flex justify-center items-center w-6 h-6 top-5 right-5 rounded-full"
                       asChild
                     >
                       <EmojiPicker
