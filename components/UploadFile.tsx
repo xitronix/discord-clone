@@ -32,7 +32,9 @@ export const UploadFile = ({
       <div className="relative h-20 w-20">
         <Image fill src={value} alt="Upload" className="rounded-full" />
         <button
-          onClick={() => onChange("")}
+          onMouseUp={(e) => {
+            onChange("");
+          }}
           className="rounded-full bg-rose-500 text-white absolute top-0 right-0"
         >
           <X className="h-4 w-4" />

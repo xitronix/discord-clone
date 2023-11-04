@@ -7,6 +7,7 @@ import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
 import { Button } from "../ui/button";
 import { Plus, Smile } from "lucide-react";
 import { Input } from "../ui/input";
+import { ChatAttachment } from "./ChatAttachment";
 
 interface ChatInputProps {
   apiUrl: string;
@@ -17,6 +18,7 @@ interface ChatInputProps {
 
 const formSchema = z.object({
   content: z.string().min(1),
+  fileUrl: z.string().min(0),
 });
 
 export const ChatInput = ({ apiUrl, name, type, query }: ChatInputProps) => {
@@ -24,6 +26,7 @@ export const ChatInput = ({ apiUrl, name, type, query }: ChatInputProps) => {
     resolver: zodResolver(formSchema),
     defaultValues: {
       content: "",
+      fileUrl: "",
     },
   });
 
@@ -46,40 +49,50 @@ export const ChatInput = ({ apiUrl, name, type, query }: ChatInputProps) => {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)}>
-        <FormField
-          control={form.control}
-          name="content"
-          render={({ field }) => (
-            <FormItem>
-              <FormControl>
-                <div className="relative p-3 mb-4">
-                  <Button
-                    variant="secondary"
-                    size="icon"
-                    type="button"
-                    className="absolute flex justify-center items-center p-1 w-6 h-6 top-5 left-5 rounded-full bg-foreground hover:bg-primary-foreground"
-                  >
-                    <Plus className="text-background" />
-                  </Button>
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    type="button"
-                    className="absolute flex justify-center items-center w-6 h-6 top-5 right-5 rounded-full"
-                  >
-                    <Smile className="text-foreground hover:text-primary-foreground" />
-                  </Button>
-                  <Input
-                    disabled={isLoading}
-                    className="px-10 w-full dark:bg-zinc-700 focus-visible:ring-0 focus-visible:ring-offset-0  border-0 border-none"
-                    placeholder={`Message ${type === "dm" ? "@" : "#"}${name}`}
-                    {...field}
+        <div className="relative p-1 mb-4">
+          <FormField
+            control={form.control}
+            name="fileUrl"
+            render={({ field }) => (
+              <FormItem>
+                <FormControl>
+                  <ChatAttachment
+                    onChange={field.onChange}
+                    value={field.value}
                   />
-                </div>
-              </FormControl>
-            </FormItem>
-          )}
-        />
+                </FormControl>
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="content"
+            render={({ field }) => (
+              <FormItem>
+                <FormControl>
+                  <>
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      type="button"
+                      className="absolute flex justify-center items-center w-6 h-6 top-5 right-5 rounded-full"
+                    >
+                      <Smile className="text-foreground hover:text-primary-foreground" />
+                    </Button>
+                    <Input
+                      disabled={isLoading}
+                      className="px-12 w-full dark:bg-zinc-700 focus-visible:ring-0 focus-visible:ring-offset-0  border-0 border-none"
+                      placeholder={`Message ${
+                        type === "dm" ? "@" : "#"
+                      }${name}`}
+                      {...field}
+                    />
+                  </>
+                </FormControl>
+              </FormItem>
+            )}
+          />
+        </div>
       </form>
     </Form>
   );
