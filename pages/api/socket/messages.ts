@@ -88,7 +88,7 @@ export default async function handler(
 
     return res.status(200).json(message);
   } catch (error) {
-    console.error("[/api/socket/messages(POST)]", error);
+    console.error("[/api/socket/messages] [POST]", error);
     return res.status(500).json({ message: "Internal Error" });
   }
 }

@@ -32,6 +32,7 @@ const MemberChatPage = async ({
   return (
     <div className="flex flex-col h-full w-full">
       <ChatMessages
+        paramKey={"dmChannelId"}
         paramValue={dmChannel.id}
         chatId={dmChannel.id}
         type="dm"

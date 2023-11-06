@@ -1,7 +1,15 @@
 "use client";
 
-import { Member } from "@prisma/client";
+import { Member, Message } from "@prisma/client";
 import { ChatWelcome, ChatWelcomeProps } from "./ChatWelcome";
+import { useChatQuery } from "@/hooks/useChatQuery";
+import { Loader2, ServerCrash } from "lucide-react";
+import { Fragment } from "react";
+import { MembersWithProfile } from "@/types";
+
+type MessageWithMembersWithProfile = Message & {
+  member: MembersWithProfile;
+};
 
 interface ChatMessagesProps extends ChatWelcomeProps {
   member: Member;
@@ -9,7 +17,7 @@ interface ChatMessagesProps extends ChatWelcomeProps {
   apiUrl: string;
   socketUrl: string;
   socketQuery: Array<{ key: string; value: string }>;
-  // paramkey: "channelId" | "dmChannelId";
+  paramKey: "channelId" | "dmChannelId";
   paramValue: string;
 }
 
@@ -20,13 +28,50 @@ export const ChatMessages = ({
   apiUrl,
   socketUrl,
   socketQuery,
+  paramKey,
   paramValue,
   type,
 }: ChatMessagesProps) => {
+  const queryKey = `chat:${chatId}`;
+
+  const { status, data } = useChatQuery({
+    queryKey,
+    apiUrl,
+    paramKey,
+    paramValue,
+  });
+  if (status === "pending") {
+    return (
+      <div className="flex flex-1 flex-col justify-center items-center">
+        <Loader2 className="h-10 w-10 animate-spin" />
+        <p>Loading messages</p>
+      </div>
+    );
+  }
+  if (status === "error") {
+    return (
+      <div className="flex flex-1 flex-col justify-center items-center">
+        <ServerCrash className="h-10 w-10" />
+        <p>Something went wrong</p>
+      </div>
+    );
+  }
   return (
     <div className="flex-1 flex flex-col py-4 overflow-y-auto">
-      <div className="flex-1"/>
+      <div className="flex-1" />
       <ChatWelcome name={name} type={type} />
+      <div className="flex flex-col-reverse mt-auto">
+        {data?.pages?.map((group, i) => {
+          return (
+            <Fragment key={i}>
+              {group.items.map((message: MessageWithMembersWithProfile) => (
+                <div key={message.id}>{message.content}</div>
+              ))}
+              <div> </div>
+            </Fragment>
+          );
+        })}
+      </div>
     </div>
   );
 };

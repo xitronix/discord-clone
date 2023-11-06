@@ -64,6 +64,7 @@ const ChannelPage = async ({ params }: ChannelPageProps) => {
       <div className="flex h-full">
         <div className="flex flex-col w-full">
           <ChatMessages
+            paramKey="channelId"
             paramValue={channel.id}
             chatId={channel.id}
             type="channel"

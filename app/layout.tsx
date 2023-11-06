@@ -5,6 +5,7 @@ import { Noto_Sans } from "next/font/google";
 import { ThemeProvider } from "@/context/Theme";
 import { ModalProvider } from "@/context/ModalProvider";
 import { SocketProvider } from "@/context/Socket";
+import { QueryProvider } from "@/context/QueryProvider";
 
 const notoSans = Noto_Sans({
   subsets: ["latin"],
@@ -32,8 +33,10 @@ export default function RootLayout({
             storageKey="discord-clone-theme"
           >
             <SocketProvider>
-              <ModalProvider />
-              {children}
+              <QueryProvider>
+                <ModalProvider />
+                {children}
+              </QueryProvider>
             </SocketProvider>
           </ThemeProvider>
         </AuthContextProvider>
