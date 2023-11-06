@@ -5,12 +5,12 @@ import { io } from "socket.io-client";
 
 type SocketContextType = {
   socket: any | null;
-  isConnnected: boolean;
+  isConnected: boolean;
 };
 
 const SocketContext = createContext<SocketContextType>({
   socket: null,
-  isConnnected: false,
+  isConnected: false,
 });
 
 export const useSocket = () => {
@@ -19,7 +19,7 @@ export const useSocket = () => {
 
 export const SocketProvider = ({ children }: { children: React.ReactNode }) => {
   const [socket, setSocket] = useState(null);
-  const [isConnnected, setIsConnnected] = useState(false);
+  const [isConnected, setIsConnected] = useState(false);
 
   useEffect(() => {
     const socketInstance = new (io as any)(process.env.NEXT_PUBLIC_SITE_URL, {
@@ -28,10 +28,10 @@ export const SocketProvider = ({ children }: { children: React.ReactNode }) => {
     });
 
     socketInstance.on("connect", () => {
-      setIsConnnected(true);
+      setIsConnected(true);
     });
     socketInstance.on("disconnect", () => {
-      setIsConnnected(false);
+      setIsConnected(false);
     });
     setSocket(socketInstance);
 
@@ -39,7 +39,7 @@ export const SocketProvider = ({ children }: { children: React.ReactNode }) => {
   }, []);
 
   return (
-    <SocketContext.Provider value={{ socket, isConnnected }}>
+    <SocketContext.Provider value={{ socket, isConnected }}>
       {children}
     </SocketContext.Provider>
   );

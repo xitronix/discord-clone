@@ -4,9 +4,9 @@ import { useSocket } from "@/context/Socket";
 import { Badge } from "./ui/badge";
 
 export const SocketIndicator = () => {
-  const { isConnnected } = useSocket();
+  const { isConnected: isConnected } = useSocket();
 
-  if (!isConnnected) {
+  if (!isConnected) {
     return (
       <Badge
         variant="outline"
