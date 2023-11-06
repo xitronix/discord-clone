@@ -1,4 +1,5 @@
 import { ChatInput } from "@/components/chat/ChatInput";
+import { ChatMessages } from "@/components/chat/ChatMessages";
 import { DmChannelHeader } from "@/components/dm/DMChannelHeader";
 import { currentProfile } from "@/lib/currentProfile";
 import { db } from "@/lib/db";
@@ -30,7 +31,16 @@ const MemberChatPage = async ({
   const otherProfile = owner.id === profile.id ? recipient : owner;
   return (
     <div className="flex flex-col h-full w-full">
-      <div className="flex-1">Future messages</div>
+      <ChatMessages
+        paramValue={dmChannel.id}
+        chatId={dmChannel.id}
+        type="dm"
+        name={otherProfile.name}
+        member={{} as any}
+        socketQuery={[{ key: "channelId", value: dmChannel.id }]}
+        socketUrl="/api/socket/dm-messages"
+        apiUrl="/api/dm-messages"
+      />
       <ChatInput
         name={otherProfile.name}
         type="dm"

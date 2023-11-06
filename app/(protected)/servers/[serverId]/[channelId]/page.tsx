@@ -1,6 +1,7 @@
 import { MobileToggle } from "@/components/MobileToggle";
 import { ChannelHeader } from "@/components/chat/ChannelHeader";
 import { ChatInput } from "@/components/chat/ChatInput";
+import { ChatMessages } from "@/components/chat/ChatMessages";
 import { MembersSidebar } from "@/components/membersSidebar/MembersSidebar";
 import { ServerSidebar } from "@/components/server/ServerSidebar";
 import { currentProfile } from "@/lib/currentProfile";
@@ -62,7 +63,19 @@ const ChannelPage = async ({ params }: ChannelPageProps) => {
       </ChannelHeader>
       <div className="flex h-full">
         <div className="flex flex-col w-full">
-          <div className="flex-1">Future messages</div>
+          <ChatMessages
+            paramValue={channel.id}
+            chatId={channel.id}
+            type="channel"
+            member={member}
+            name={channel.name}
+            socketQuery={[
+              { key: "channelId", value: channel.id },
+              { key: "serverId", value: channel.serverId },
+            ]}
+            socketUrl="/api/socket/messages"
+            apiUrl="/api/messages"
+          />
           <ChatInput
             name={channel.name}
             type="channel"
