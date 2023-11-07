@@ -18,10 +18,16 @@ interface ChatInputProps {
   type: "dm" | "channel";
 }
 
-const formSchema = z.object({
-  content: z.string().min(1),
-  fileUrl: z.string().min(0),
-});
+const formSchema = z
+  .object({
+    content: z.string().min(0),
+    fileUrl: z.string().min(0),
+  })
+  .partial()
+  .refine(
+    (data) => data.content || data.fileUrl,
+    "No data"
+  );
 
 export const ChatInput = ({ apiUrl, name, type, query }: ChatInputProps) => {
   const form = useForm<z.infer<typeof formSchema>>({
@@ -77,12 +83,7 @@ export const ChatInput = ({ apiUrl, name, type, query }: ChatInputProps) => {
               <FormItem>
                 <FormControl>
                   <>
-                    <Button
-                      variant="ghost"
-                      size="icon"
-                      type="button"
-                      asChild
-                    >
+                    <Button variant="ghost" size="icon" type="button" asChild>
                       <EmojiPicker
                         onChange={(emoji) => {
                           const selectionStart =

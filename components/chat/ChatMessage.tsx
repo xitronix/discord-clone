@@ -2,6 +2,11 @@ import { MemberRole, Profile } from "@prisma/client";
 import { UserAvatar } from "../UserAvatar";
 import ActionTooltip from "../ActionTooltip";
 import { RoleIcon } from "../RoleIcon";
+import Image from "next/image";
+import { Edit, Trash } from "lucide-react";
+import { useEffect, useState } from "react";
+import { Input } from "../ui/input";
+import { cn } from "@/lib";
 
 interface ChatMessageProps {
   id: string;
@@ -10,7 +15,8 @@ interface ChatMessageProps {
   role?: MemberRole;
   timestamp: string;
   fileUrl: string | null;
-  currentProfile?: Profile;
+  isOwner: boolean;
+  userRole: MemberRole;
   isUpdated: boolean;
   deleted: boolean;
   socketUrl: string;
@@ -24,32 +30,140 @@ export const ChatMessage = ({
   role,
   timestamp,
   fileUrl,
-  currentProfile,
+  userRole,
   isUpdated,
+  isOwner,
   deleted,
   socketUrl,
   socketQuery,
 }: ChatMessageProps) => {
+  const isAdmin = userRole === MemberRole.ADMIN;
+  const isModerator = userRole === MemberRole.MODERATOR;
+  const canDeleteMessage = !deleted && (isAdmin || isModerator || isOwner);
+  const canEditMessage = !deleted && isOwner && content;
+  const [isEditing, setIsEditing] = useState(false);
+  const [newContent, setNewContent] = useState<string>(content);
+
+  useEffect(() => {
+    if (!isEditing) {
+      return;
+    }
+    const down = (e: KeyboardEvent) => {
+      if (e.code === "Escape") {
+        setIsEditing(false);
+        setNewContent(content);
+      }
+      if (e.code === "Enter") {
+        if (!newContent) {
+          modifyMessage("DELETE");
+          return;
+        }
+        modifyMessage("PATCH");
+      }
+    };
+    document.addEventListener("keydown", down);
+    return () => document.removeEventListener("keydown", down);
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [newContent, isEditing]);
+
+  const modifyMessage = async (method: "PATCH" | "DELETE") => {
+    try {
+      await fetch(
+        `/api/socket/messages/${id}?${socketQuery
+          .map(({ key, value }) => `${key}=${value}`)
+          .join("&")}`,
+        {
+          method,
+          body: JSON.stringify({ content: newContent }),
+        }
+      );
+      setIsEditing(false);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
-    <div className="relative group flex items-center hover:bg-secondary-background/5 p-4 transition w-full">
+    <div
+      className={cn(
+        "relative group flex hover:bg-secondary-background/50 p-4 transition w-full",
+        isEditing && "bg-secondary-background/50"
+      )}
+    >
       <UserAvatar
         src={profile.imageUrl}
         name={profile.name}
         className="cursor-pointer howver:drop-shadow-md transition"
       />
-      <div className="px-3 text-sm">
-        <div className="flex gap-2 items-center">
-          <p className="flex items-center gap-2 font-semibold cursor-pointer">
-            {profile.name}
-            {role && (
-              <ActionTooltip label={role}>
-                <RoleIcon role={role} />
+      <div className="px-3 text-sm flex flex-col gap-2">
+        <div>
+          <div className="flex gap-2 items-center">
+            <p className="flex items-center gap-2 font-semibold cursor-pointer">
+              {profile.name}
+              {role && (
+                <ActionTooltip label={role}>
+                  <RoleIcon role={role} />
+                </ActionTooltip>
+              )}
+            </p>
+            <span className="text-xs text-secondary-foreground">
+              {timestamp}
+            </span>
+          </div>
+          {fileUrl && (
+            <a
+              href={fileUrl}
+              rel="noopener noreferrer"
+              target="_blank"
+              className="relative h-48 w-48 bg-background-secondary overflow-hiedden flex aspect-square rounded-md mt-2 items-center"
+            >
+              <Image
+                src={fileUrl}
+                alt={content}
+                fill
+                className="object-cover"
+              />
+            </a>
+          )}
+          {!isEditing && (
+            <p className="py-2">
+              {newContent}
+              {isUpdated && !deleted && (
+                <span className="text-xs mx-2">(edited)</span>
+              )}
+            </p>
+          )}
+        </div>
+        {isEditing && (
+          <Input
+            value={newContent}
+            onChange={(e) => setNewContent(e.target.value)}
+            autoFocus
+          />
+        )}
+        {canDeleteMessage && (
+          <div className="hidden group-hover:flex items-center p-2 gap-2 rounded-sm bg-secondary/30 absolute -top-2 right-4">
+            {canEditMessage && (
+              <ActionTooltip label="edit">
+                <Edit
+                  onClick={() => {
+                    setIsEditing(true);
+                  }}
+                  className="cursor-pointer dark:hover:text-primary-foreground w-4 h-4"
+                />
               </ActionTooltip>
             )}
-          </p>
-          <span className="text-xs text-secondary-foreground">{timestamp}</span>
-        </div>
-        <p>{content}</p>
+            <ActionTooltip label="delete">
+              <Trash
+                onClick={() => {
+                  console.log("TODO: delete");
+                }}
+                className="cursor-pointer dark:hover:text-primary-foreground w-4 h-4"
+              />
+            </ActionTooltip>
+          </div>
+        )}
       </div>
     </div>
   );

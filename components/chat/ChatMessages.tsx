@@ -1,6 +1,6 @@
 "use client";
 
-import { Member, Message } from "@prisma/client";
+import { Member, MemberRole, Message } from "@prisma/client";
 import { ChatWelcome, ChatWelcomeProps } from "./ChatWelcome";
 import { useChatQuery } from "@/hooks/useChatQuery";
 import { Loader2, ServerCrash } from "lucide-react";
@@ -16,7 +16,8 @@ type MessageWithMembersWithProfile = Message & {
 };
 
 interface ChatMessagesProps extends ChatWelcomeProps {
-  member: Member;
+  userRole: MemberRole;
+  userId: string;
   chatId: string;
   apiUrl: string;
   socketUrl: string;
@@ -27,7 +28,8 @@ interface ChatMessagesProps extends ChatWelcomeProps {
 
 export const ChatMessages = ({
   name,
-  member,
+  userRole,
+  userId,
   chatId,
   apiUrl,
   socketUrl,
@@ -74,6 +76,8 @@ export const ChatMessages = ({
                   id={message.id}
                   content={message.content}
                   profile={message.member.profile}
+                  userRole={userRole}
+                  isOwner={message.member.id === userId}
                   role={message.member.role}
                   fileUrl={message.fileUrl}
                   deleted={message.deleted}

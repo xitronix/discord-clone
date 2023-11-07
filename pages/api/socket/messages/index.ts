@@ -1,7 +1,7 @@
 import { currentProfilePages } from "@/lib/currentProfilePages";
 import { db } from "@/lib/db";
 import { NextApiRequest } from "next/types";
-import { NextApiResonseServerIo } from "./io";
+import { NextApiResonseServerIo } from "../io";
 
 export default async function handler(
   req: NextApiRequest,
@@ -27,8 +27,8 @@ export default async function handler(
       return res.status(400).json({ error: "ChannelId is missing" });
     }
 
-    if (!content) {
-      return res.status(400).json({ error: "Content is missing" });
+    if (!content && !fileUrl) {
+      return res.status(400).json({ error: "Content or fileUrl is required" });
     }
 
     const server = await db.server.findUnique({
