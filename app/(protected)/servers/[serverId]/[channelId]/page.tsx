@@ -69,7 +69,8 @@ const ChannelPage = async ({ params }: ChannelPageProps) => {
             chatId={channel.id}
             type="channel"
             userRole={member.role}
-            userId={member.id}
+            userProfileId={profile.id}
+            userMessageId={member.id}
             name={channel.name}
             socketQuery={[
               { key: "channelId", value: channel.id },

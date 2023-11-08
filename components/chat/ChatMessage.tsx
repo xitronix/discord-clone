@@ -8,6 +8,8 @@ import { useEffect, useState } from "react";
 import { Input } from "../ui/input";
 import { cn } from "@/lib";
 import { useModal } from "@/hooks/useModalStore";
+import { getOrCreateDmChannel } from "@/lib/getOrCreateDmChannel";
+import { useRouter } from "next/navigation";
 
 interface ChatMessageProps {
   id: string;
@@ -17,6 +19,7 @@ interface ChatMessageProps {
   timestamp: string;
   fileUrl: string | null;
   isOwner: boolean;
+  userProfileId: string;
   userRole: MemberRole;
   isUpdated: boolean;
   deleted: boolean;
@@ -31,6 +34,7 @@ export const ChatMessage = ({
   role,
   timestamp,
   fileUrl,
+  userProfileId,
   userRole,
   isUpdated,
   isOwner,
@@ -41,6 +45,7 @@ export const ChatMessage = ({
   const [isEditing, setIsEditing] = useState(false);
   const [newContent, setNewContent] = useState<string>(content);
   const { onOpen } = useModal();
+  const router = useRouter();
 
   const editMessageUrl = `${socketUrl}/${id}?${socketQuery
     .map(({ key, value }) => `${key}=${value}`)
@@ -94,6 +99,11 @@ export const ChatMessage = ({
     return null;
   }
 
+  const onMemberClick = async () => {
+    const dmChannel = await getOrCreateDmChannel(userProfileId, profile.id);
+    router.push(`/servers/me/${dmChannel.id}`);
+  };
+
   return (
     <div
       className={cn(
@@ -102,6 +112,7 @@ export const ChatMessage = ({
       )}
     >
       <UserAvatar
+        onClick={onMemberClick}
         src={profile.imageUrl}
         name={profile.name}
         className="cursor-pointer howver:drop-shadow-md transition"
@@ -109,7 +120,10 @@ export const ChatMessage = ({
       <div className="px-3 text-sm flex flex-col gap-2">
         <div>
           <div className="flex gap-2 items-center">
-            <p className="flex items-center gap-2 font-semibold cursor-pointer">
+            <p
+              onClick={onMemberClick}
+              className="flex items-center gap-2 font-semibold cursor-pointer"
+            >
               {profile.name}
               {role && (
                 <ActionTooltip label={role}>

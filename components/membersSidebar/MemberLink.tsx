@@ -5,6 +5,7 @@ import { Member } from "../Member";
 import { UserAvatar } from "../UserAvatar";
 import { useRouter } from "next/navigation";
 import { cn } from "@/lib";
+import { getOrCreateDmChannel } from "@/lib/getOrCreateDmChannel";
 
 interface MemberLinkProps {
   userProfileId: string;
@@ -23,19 +24,8 @@ export const MemberLink = ({
   return (
     <div
       onClick={async () => {
-        try {
-          const response = await fetch("/api/dm-channels", {
-            body: JSON.stringify({
-              ownerId: userProfileId,
-              recipientId: profile.id,
-            }),
-            method: "POST",
-          });
-          const dmChannel = await response.json();
-          router.push(`/servers/me/${dmChannel.id}`);
-        } catch (e) {
-          console.error("Canot create dm channel");
-        }
+        const dmChannel = await getOrCreateDmChannel(userProfileId, profile.id);
+        router.push(`/servers/me/${dmChannel.id}`);
       }}
       className={cn("flex justify-start items-center gap-3", className)}
     >

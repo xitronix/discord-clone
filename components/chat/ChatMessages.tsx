@@ -17,7 +17,8 @@ type MessageWithMembersWithProfile = Message & {
 
 interface ChatMessagesProps extends ChatWelcomeProps {
   userRole: MemberRole;
-  userId: string;
+  userProfileId: string;
+  userMessageId: string;
   chatId: string;
   apiUrl: string;
   socketUrl: string;
@@ -29,7 +30,8 @@ interface ChatMessagesProps extends ChatWelcomeProps {
 export const ChatMessages = ({
   name,
   userRole,
-  userId,
+  userProfileId,
+  userMessageId,
   chatId,
   apiUrl,
   socketUrl,
@@ -77,7 +79,8 @@ export const ChatMessages = ({
                   content={message.content}
                   profile={message.member.profile}
                   userRole={userRole}
-                  isOwner={message.member.id === userId}
+                  userProfileId={userProfileId}
+                  isOwner={message.member.id === userMessageId}
                   role={message.member.role}
                   fileUrl={message.fileUrl}
                   deleted={message.deleted}
