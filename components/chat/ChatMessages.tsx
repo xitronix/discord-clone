@@ -5,15 +5,11 @@ import { ChatWelcome, ChatWelcomeProps } from "./ChatWelcome";
 import { useChatQuery } from "@/hooks/useChatQuery";
 import { Loader2, ServerCrash } from "lucide-react";
 import { Fragment } from "react";
-import { MembersWithProfile } from "@/types";
+import { MessageWithMembersWithProfile } from "@/types";
 import { ChatMessage } from "./ChatMessage";
 import { format } from "date-fns";
 
 const DATE_FORMAT = "dd/MM/yyyy HH:mm";
-
-type MessageWithMembersWithProfile = Message & {
-  member: MembersWithProfile;
-};
 
 interface ChatMessagesProps extends ChatWelcomeProps {
   userRole: MemberRole;
