@@ -50,24 +50,30 @@ export const ChatMessage = ({
   const canDeleteMessage = !deleted && (isAdmin || isModerator || isOwner);
   const canEditMessage = !deleted && isOwner && content;
 
+  const onDelete = () => {
+    onOpen("deleteMessage", {
+      url: editMessageUrl,
+    });
+  };
   useEffect(() => {
     if (!isEditing) {
       return;
     }
-    const down = (e: KeyboardEvent) => {
+    const up = (e: KeyboardEvent) => {
       if (e.code === "Escape") {
         setIsEditing(false);
         setNewContent(content);
       }
       if (e.code === "Enter") {
         if (!newContent) {
-          return onOpen("deleteMessage", { url: editMessageUrl });
+          onDelete();
+        } else {
+          modifyMessage("PATCH");
         }
-        modifyMessage("PATCH");
       }
     };
-    document.addEventListener("keydown", down);
-    return () => document.removeEventListener("keydown", down);
+    document.addEventListener("keyup", up);
+    return () => document.removeEventListener("keyup", up);
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [newContent, isEditing]);
@@ -160,11 +166,7 @@ export const ChatMessage = ({
             )}
             <ActionTooltip label="delete">
               <Trash
-                onClick={() =>
-                  onOpen("deleteMessage", {
-                    url: editMessageUrl,
-                  })
-                }
+                onClick={onDelete}
                 className="cursor-pointer dark:hover:text-primary-foreground w-4 h-4"
               />
             </ActionTooltip>
