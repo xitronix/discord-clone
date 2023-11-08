@@ -16,10 +16,7 @@ const DmChannelLayout = async ({
 
   const dmChannels = await getAllDmChannels(profile.id);
 
-  const currentChannel = dmChannels.find(
-    ({ owner, recipient }) =>
-      owner.id === profile.id || recipient.id === profile.id
-  );
+  const currentChannel = dmChannels.find(({ id }) => params.dmChannelId == id);
 
   if (dmChannels.length === 0 || !currentChannel) {
     return redirect("/");
