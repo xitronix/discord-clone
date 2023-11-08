@@ -8,6 +8,7 @@ import { Fragment } from "react";
 import { MessageWithMembersWithProfile } from "@/types";
 import { ChatMessage } from "./ChatMessage";
 import { format } from "date-fns";
+import { useChatSocket } from "@/hooks/useChatSocket";
 
 const DATE_FORMAT = "dd/MM/yyyy HH:mm";
 
@@ -44,6 +45,13 @@ export const ChatMessages = ({
     paramKey,
     paramValue,
   });
+
+  useChatSocket({
+    queryKey,
+    addKey: `${queryKey}:messages`,
+    updateKey: `${queryKey}:messages:update`,
+  });
+
   if (status === "pending") {
     return (
       <div className="flex flex-1 flex-col justify-center items-center">
