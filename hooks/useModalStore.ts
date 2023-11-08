@@ -12,11 +12,13 @@ export type ModalType =
   | "leaveServer"
   | "deleteServer"
   | "deleteChannel"
-  | "searchServer";
+  | "searchServer"
+  | "deleteMessage";
 
 interface ModalData {
   server?: ServerWithMembersWithProfile;
   channel?: Channel;
+  url?: string;
 }
 
 interface ModalStore {

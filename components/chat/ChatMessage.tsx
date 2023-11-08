@@ -7,6 +7,7 @@ import { Edit, Trash } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Input } from "../ui/input";
 import { cn } from "@/lib";
+import { useModal } from "@/hooks/useModalStore";
 
 interface ChatMessageProps {
   id: string;
@@ -37,12 +38,17 @@ export const ChatMessage = ({
   socketUrl,
   socketQuery,
 }: ChatMessageProps) => {
+  const [isEditing, setIsEditing] = useState(false);
+  const [newContent, setNewContent] = useState<string>(content);
+  const { onOpen } = useModal();
+
+  const editMessageUrl = `${socketUrl}/${id}?${socketQuery
+    .map(({ key, value }) => `${key}=${value}`)
+    .join("&")}`;
   const isAdmin = userRole === MemberRole.ADMIN;
   const isModerator = userRole === MemberRole.MODERATOR;
   const canDeleteMessage = !deleted && (isAdmin || isModerator || isOwner);
   const canEditMessage = !deleted && isOwner && content;
-  const [isEditing, setIsEditing] = useState(false);
-  const [newContent, setNewContent] = useState<string>(content);
 
   useEffect(() => {
     if (!isEditing) {
@@ -55,8 +61,7 @@ export const ChatMessage = ({
       }
       if (e.code === "Enter") {
         if (!newContent) {
-          modifyMessage("DELETE");
-          return;
+          return onOpen("deleteMessage", { url: editMessageUrl });
         }
         modifyMessage("PATCH");
       }
@@ -69,20 +74,19 @@ export const ChatMessage = ({
 
   const modifyMessage = async (method: "PATCH" | "DELETE") => {
     try {
-      await fetch(
-        `/api/socket/messages/${id}?${socketQuery
-          .map(({ key, value }) => `${key}=${value}`)
-          .join("&")}`,
-        {
-          method,
-          body: JSON.stringify({ content: newContent }),
-        }
-      );
+      await fetch(editMessageUrl, {
+        method,
+        body: JSON.stringify({ content: newContent }),
+      });
       setIsEditing(false);
     } catch (error) {
       console.error(error);
     }
   };
+
+  if (deleted) {
+    return null;
+  }
 
   return (
     <div
@@ -156,9 +160,11 @@ export const ChatMessage = ({
             )}
             <ActionTooltip label="delete">
               <Trash
-                onClick={() => {
-                  console.log("TODO: delete");
-                }}
+                onClick={() =>
+                  onOpen("deleteMessage", {
+                    url: editMessageUrl,
+                  })
+                }
                 className="cursor-pointer dark:hover:text-primary-foreground w-4 h-4"
               />
             </ActionTooltip>
