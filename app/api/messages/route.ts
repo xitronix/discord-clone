@@ -55,7 +55,7 @@ export const GET = async (req: Request) => {
     }
 
     return NextResponse.json({
-      items: messages,
+      messages,
       nextCursor: getNextCursor(messages),
     });
   } catch (error) {
