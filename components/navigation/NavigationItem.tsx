@@ -35,7 +35,7 @@ export const NavigationItem = ({ id, imageUrl, name }: NavigationItemProps) => {
             params?.serverId === id && "bg-primary/10 text-primary rounded-2xl"
           )}
         >
-          <Image fill alt={name.charAt(0).toUpperCase()} src={imageUrl} />
+          <Image fill sizes="33vw" alt={name.charAt(0).toUpperCase()} src={imageUrl} />
         </div>
       </div>
     </ActionTooltip>
