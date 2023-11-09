@@ -5,12 +5,14 @@ import { ChatWelcome, ChatWelcomeProps } from "./ChatWelcome";
 import { useChatQuery } from "@/hooks/useChatQuery";
 import { Loader2, ServerCrash } from "lucide-react";
 import { ElementRef, Fragment, useRef } from "react";
-import { MessageWithMembersWithProfile } from "@/types";
+import {
+  DirectMessageWithProfile,
+  MessageWithMembersWithProfile,
+} from "@/types";
 import { ChatMessage } from "./ChatMessage";
 import { format } from "date-fns";
 import { useChatSocket } from "@/hooks/useChatSocket";
 import { useChatScroll } from "@/hooks/useChatScroll";
-import { Button } from "@/components/ui/button";
 
 const DATE_FORMAT = "dd/MM/yyyy HH:mm";
 
@@ -116,24 +118,38 @@ export const ChatMessages = ({
         {data?.pages?.map((group, i) => {
           return (
             <Fragment key={i}>
-              {group.messages.map((message: MessageWithMembersWithProfile) => (
-                <ChatMessage
-                  key={message.id}
-                  id={message.id}
-                  content={message.content}
-                  profile={message.member.profile}
-                  userRole={userRole}
-                  userProfileId={userProfileId}
-                  isOwner={message.member.id === userMessageId}
-                  role={message.member.role}
-                  fileUrl={message.fileUrl}
-                  deleted={message.deleted}
-                  isUpdated={message.updatedAt !== message.createdAt}
-                  timestamp={format(new Date(message.createdAt), DATE_FORMAT)}
-                  socketUrl={socketUrl}
-                  socketQuery={socketQuery}
-                />
-              ))}
+              {group.messages?.map((message: MessageWithMembersWithProfile) => {
+                let profile;
+                let isOwner;
+
+                if (type === "dm") {
+                  const directMessage = message as unknown as DirectMessageWithProfile;
+                  profile = directMessage.profile;
+                  isOwner = directMessage.profile.id === userMessageId;
+
+                } else {
+                  profile = message.member.profile;
+                  isOwner = message.member.id === userMessageId;
+                }
+                return(
+                  <ChatMessage
+                    key={message.id}
+                    id={message.id}
+                    content={message.content}
+                    profile={profile}
+                    userRole={userRole}
+                    userProfileId={userProfileId}
+                    isOwner={isOwner}
+                    role={message?.member?.role}
+                    fileUrl={message.fileUrl}
+                    deleted={message.deleted}
+                    isUpdated={message.updatedAt !== message.createdAt}
+                    timestamp={format(new Date(message.createdAt), DATE_FORMAT)}
+                    socketUrl={socketUrl}
+                    socketQuery={socketQuery}
+                  />
+                );
+              })}
             </Fragment>
           );
         })}

@@ -24,10 +24,7 @@ const formSchema = z
     fileUrl: z.string().min(0),
   })
   .partial()
-  .refine(
-    (data) => data.content || data.fileUrl,
-    "No data"
-  );
+  .refine((data) => data.content || data.fileUrl, "No data");
 
 export const ChatInput = ({ apiUrl, name, type, query }: ChatInputProps) => {
   const form = useForm<z.infer<typeof formSchema>>({
@@ -45,7 +42,9 @@ export const ChatInput = ({ apiUrl, name, type, query }: ChatInputProps) => {
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
       await fetch(
-        `${apiUrl}?channelId=${query.channelId}&serverId=${query.serverId}`,
+        `${apiUrl}?${Object.keys(query)[0]}=${Object.values(query)[0]}&serverId=${
+          query.serverId
+        }`,
         {
           method: "POST",
           body: JSON.stringify(values),

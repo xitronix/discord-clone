@@ -1,4 +1,10 @@
-import { Member, Message, Profile, Server } from "@prisma/client";
+import {
+  DirectMessage,
+  Member,
+  Message,
+  Profile,
+  Server,
+} from "@prisma/client";
 
 export type MembersWithProfile = Member & { profile: Profile };
 
@@ -8,4 +14,8 @@ export type ServerWithMembersWithProfile = Server & {
 
 export type MessageWithMembersWithProfile = Message & {
   member: MembersWithProfile;
+};
+
+export type DirectMessageWithProfile = DirectMessage & {
+  profile: Profile;
 };

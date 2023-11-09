@@ -40,16 +40,16 @@ const MemberChatPage = async ({
         userProfileId={profile.id}
         userMessageId={profile.id}
         userRole="ADMIN"
-        socketQuery={[{ key: "channelId", value: dmChannel.id }]}
-        socketUrl="/api/socket/dm-messages"
-        apiUrl="/api/dm-messages"
+        socketQuery={[{ key: "dmChannelId", value: dmChannel.id }]}
+        socketUrl="/api/socket/direct-messages"
+        apiUrl="/api/direct-messages"
       />
       <ChatInput
         name={otherProfile.name}
         type="dm"
-        apiUrl="/api/socket/messages"
+        apiUrl="/api/socket/direct-messages"
         query={{
-          channelId: dmChannel.id,
+          dmChannelId: dmChannel.id,
         }}
       />
     </div>
