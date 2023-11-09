@@ -55,7 +55,7 @@ const ChannelPage = async ({ params }: ChannelPageProps) => {
   }
 
   return (
-    <div className="h-full flex flex-col">
+    <div className="h-full relative flex flex-col">
       <ChannelHeader channel={channel}>
         <MobileToggle>
           <ServerSidebar serverId={params.serverId} />

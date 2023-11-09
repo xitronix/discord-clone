@@ -4,11 +4,13 @@ import { MemberRole, Message } from "@prisma/client";
 import { ChatWelcome, ChatWelcomeProps } from "./ChatWelcome";
 import { useChatQuery } from "@/hooks/useChatQuery";
 import { Loader2, ServerCrash } from "lucide-react";
-import { Fragment } from "react";
+import { ElementRef, Fragment, useRef } from "react";
 import { MessageWithMembersWithProfile } from "@/types";
 import { ChatMessage } from "./ChatMessage";
 import { format } from "date-fns";
 import { useChatSocket } from "@/hooks/useChatSocket";
+import { useChatScroll } from "@/hooks/useChatScroll";
+import { Button } from "@/components/ui/button";
 
 const DATE_FORMAT = "dd/MM/yyyy HH:mm";
 
@@ -38,18 +40,27 @@ export const ChatMessages = ({
   type,
 }: ChatMessagesProps) => {
   const queryKey = `chat:${chatId}`;
+  const chatRef = useRef<ElementRef<"div">>(null);
+  const bottomRef = useRef<ElementRef<"div">>(null);
 
-  const { status, data } = useChatQuery({
-    queryKey,
-    apiUrl,
-    paramKey,
-    paramValue,
-  });
+  const { status, data, hasNextPage, isFetchingNextPage, fetchNextPage } =
+    useChatQuery({
+      queryKey,
+      apiUrl,
+      paramKey,
+      paramValue,
+    });
 
   useChatSocket({
     queryKey,
     addKey: `${queryKey}:messages`,
     updateKey: `${queryKey}:messages:update`,
+  });
+
+  useChatScroll({
+    chatRef,
+    bottomRef,
+    count: data?.pages?.[0]?.messages?.length ?? 0,
   });
 
   if (status === "pending") {
@@ -69,9 +80,38 @@ export const ChatMessages = ({
     );
   }
   return (
-    <div className="flex-1 flex flex-col py-4 overflow-y-auto">
-      <div className="flex-1" />
-      <ChatWelcome name={name} type={type} />
+    <div
+      ref={chatRef}
+      onScroll={(e) => {
+        const shouldLoadMore = !isFetchingNextPage && !!hasNextPage;
+        const target = e.currentTarget;
+        const scrollHeight = target.scrollHeight;
+
+        if (target.scrollTop === 0 && shouldLoadMore) {
+          fetchNextPage().then(() => {
+            setTimeout(() => {
+              target.scrollTo({
+                top: target.scrollHeight - scrollHeight,
+              });
+            });
+          });
+        }
+      }}
+      className="flex-1 flex flex-col py-4 overflow-y-scroll"
+    >
+      {!hasNextPage && (
+        <>
+          <div className="flex-1" />
+          <ChatWelcome name={name} type={type} />
+        </>
+      )}
+      {hasNextPage && (
+        <div className="flex justify-center">
+          {isFetchingNextPage && (
+            <Loader2 className="h-6 w-6 animate-spin m-4" />
+          )}
+        </div>
+      )}
       <div className="flex flex-col-reverse mt-auto">
         {data?.pages?.map((group, i) => {
           return (
@@ -98,6 +138,7 @@ export const ChatMessages = ({
           );
         })}
       </div>
+      <div ref={bottomRef} />
     </div>
   );
 };

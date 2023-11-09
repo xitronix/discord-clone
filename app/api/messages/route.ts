@@ -25,7 +25,7 @@ export const GET = async (req: Request) => {
     if (cursor) {
       messages = await db.message.findMany({
         take: MESSAGE_BATCH,
-        skip: Number(cursor),
+        skip: 1,
         cursor: {
           id: cursor,
         },
