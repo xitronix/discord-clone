@@ -61,7 +61,7 @@ const ChannelPage = async ({ params }: ChannelPageProps) => {
           <ServerSidebar serverId={params.serverId} />
         </MobileToggle>
       </ChannelHeader>
-      <div className="flex h-full">
+      <div className="flex h-full overflow-auto">
         <div className="flex flex-col w-full">
           <ChatMessages
             paramKey="channelId"
