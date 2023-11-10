@@ -68,9 +68,9 @@ export const MediaRoom = ({ channelId, video }: MediaRoomProps) => {
 function MyVideoConference() {
   const tracks = useTracks(
     [
-      { source: Track.Source.Camera, withPlaceholder: true },
+      { source: Track.Source.Camera, withPlaceholder: false },
       { source: Track.Source.ScreenShare, withPlaceholder: false },
-      { source: Track.Source.Microphone, withPlaceholder: false },
+      // { source: Track.Source.Microphone, withPlaceholder: false },
     ],
     { onlySubscribed: false }
   );
