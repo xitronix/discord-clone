@@ -26,7 +26,7 @@ export default async function handler(
     }
 
     if (!channelId) {
-      return res.status(400).json({ error: "Chanel is missing" });
+      return res.status(400).json({ error: "Channel ID is missing" });
     }
 
     const server = await db.server.findFirst({
