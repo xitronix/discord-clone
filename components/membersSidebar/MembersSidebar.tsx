@@ -24,16 +24,19 @@ export const MembersSidebar = ({
   if (!isOpen) return null;
 
   return (
-    <div className="md:flex z-20 w-60 flex-col">
-      <div className="flex flex-col w-full h-full p-4 gap-y-3 text-foreground bg-secondary-background">
-        <div className="uppercase text-xs font-semibold pt-4 flex justify-between">
-          <p>Members</p>
-          <MemberTooltip server={server} role={currentRole} />
-        </div>
-        {server.members?.map(({ id, role, profile }) => (
-          <MemberLink key={id} profile={profile} role={role} userProfileId={profileId} />
-        ))}
+    <div className="w-60 flex flex-col  h-full p-4 gap-y-3 text-foreground bg-secondary-background">
+      <div className="uppercase text-xs font-semibold pt-4 flex justify-between">
+        <p>Members</p>
+        <MemberTooltip server={server} role={currentRole} />
       </div>
+      {server.members?.map(({ id, role, profile }) => (
+        <MemberLink
+          key={id}
+          profile={profile}
+          role={role}
+          userProfileId={profileId}
+        />
+      ))}
     </div>
   );
 };

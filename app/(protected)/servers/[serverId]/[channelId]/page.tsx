@@ -2,10 +2,12 @@ import { MobileToggle } from "@/components/MobileToggle";
 import { ChannelHeader } from "@/components/chat/ChannelHeader";
 import { ChatInput } from "@/components/chat/ChatInput";
 import { ChatMessages } from "@/components/chat/ChatMessages";
+import { MediaRoom } from "@/components/media-room";
 import { MembersSidebar } from "@/components/membersSidebar/MembersSidebar";
 import { ServerSidebar } from "@/components/server/ServerSidebar";
 import { currentProfile } from "@/lib/currentProfile";
 import { db } from "@/lib/db";
+import { ChannelType } from "@prisma/client";
 import { redirect } from "next/navigation";
 
 interface ChannelPageProps {
@@ -53,7 +55,6 @@ const ChannelPage = async ({ params }: ChannelPageProps) => {
   if (!channel || !member) {
     return redirect("/");
   }
-
   return (
     <div className="h-full relative flex flex-col">
       <ChannelHeader channel={channel}>
@@ -63,31 +64,40 @@ const ChannelPage = async ({ params }: ChannelPageProps) => {
       </ChannelHeader>
       <div className="flex h-full overflow-auto">
         <div className="flex flex-col w-full">
-          <ChatMessages
-            paramKey="channelId"
-            paramValue={channel.id}
-            chatId={channel.id}
-            type="channel"
-            userRole={member.role}
-            userProfileId={profile.id}
-            userMessageId={member.id}
-            name={channel.name}
-            socketQuery={[
-              { key: "channelId", value: channel.id },
-              { key: "serverId", value: channel.serverId },
-            ]}
-            socketUrl="/api/socket/messages"
-            apiUrl="/api/messages"
-          />
-          <ChatInput
-            name={channel.name}
-            type="channel"
-            apiUrl="/api/socket/messages"
-            query={{
-              channelId: channel.id,
-              serverId: channel.serverId,
-            }}
-          />
+          {channel.type === "TEXT" ? (
+            <>
+              <ChatMessages
+                paramKey="channelId"
+                paramValue={channel.id}
+                chatId={channel.id}
+                type="channel"
+                userRole={member.role}
+                userProfileId={profile.id}
+                userMessageId={member.id}
+                name={channel.name}
+                socketQuery={[
+                  { key: "channelId", value: channel.id },
+                  { key: "serverId", value: channel.serverId },
+                ]}
+                socketUrl="/api/socket/messages"
+                apiUrl="/api/messages"
+              />
+              <ChatInput
+                name={channel.name}
+                type="channel"
+                apiUrl="/api/socket/messages"
+                query={{
+                  channelId: channel.id,
+                  serverId: channel.serverId,
+                }}
+              />
+            </>
+          ) : (
+            <MediaRoom
+              channelId={channel.id}
+              video={channel.type === ChannelType.VIDEO}
+            />
+          )}
         </div>
         <MembersSidebar server={server} profileId={profile.id} />
       </div>
